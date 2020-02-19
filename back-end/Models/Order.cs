@@ -4,7 +4,7 @@ namespace back_end.Models
 {
     public class Order
     {
-        public int Order_Id {get; set;}
+        public long Order_Id {get; set;}
         public int Customer_Id {get; set;}
         public DateTime Order_Date {get; set;}
         public string City {get; set;}

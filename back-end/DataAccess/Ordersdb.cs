@@ -9,10 +9,10 @@ namespace dbSettings.DataAccess
 {
     public class Orderdb
     {
-        public List<Order> GetToDosAsGenericList(int id)
+        public List<Order> GetOrdersAsGenericList(int id)
         {
-            List<Order> users = new List<Order>();
-            string sql = "SELECT Order_Date, City, Street, Number, Status FROM Orders join Addresses on Orders.Address_ID=Addresses.ID WHERE Customer_Id = '{0}'";
+            List<Order> orders = new List<Order>();
+            string sql = "SELECT Order_Id, Customer_Id, Order_Date, City, Street, Number, Status FROM Orders join Addresses on Orders.Address_ID=Addresses.ID WHERE Customer_Id = '{0}'";
             StringBuilder errorMessages = new StringBuilder();
             try
             {
@@ -25,8 +25,10 @@ namespace dbSettings.DataAccess
                         {
                             while (dataReader.Read())
                             {
-                                users.Add(new Order
+                                orders.Add(new Order
                                 {
+                                    Order_Id=dataReader.GetInt64(dataReader.GetOrdinal("Order_Id")),
+                                    Customer_Id=dataReader.GetInt32(dataReader.GetOrdinal("Customer_Id")),
                                     Order_Date=dataReader.GetDateTime(dataReader.GetOrdinal("Order_Date")),
                                     City = dataReader.GetString(dataReader.GetOrdinal("City")),
                                     Street = dataReader.GetString(dataReader.GetOrdinal("Street")),
@@ -50,7 +52,7 @@ namespace dbSettings.DataAccess
                         }
                         Console.WriteLine(errorMessages.ToString());
                     }
-            return users;
+            return orders;
         }
     }
 }
