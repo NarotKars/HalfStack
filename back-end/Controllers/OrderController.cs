@@ -13,6 +13,21 @@ namespace back_end.Controllers
     [RoutePrefix("api/Orders/Feedback")]
     public class OrderController : ControllerBase
     {
+        [HttpGet]
+        public IHttpActionResult GetFeedback(int id)
+        {
+            try
+            {
+                var feedback = OrderManager.GetFeedback(id);
+               
+                return Ok(feedback);
+            }
+            catch(Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
         [HttpPut]
         public IHttpActionResult PutFeedback(OrderFeedbackModel model)
         {
