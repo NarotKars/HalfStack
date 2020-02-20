@@ -1,0 +1,52 @@
+using back_end.Models;
+using System.Data.SqlClient;
+
+namespace back_end.Managers
+{
+    public class DeliveryPersonManager
+    {
+        private const string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=Supermarket_DB;Integrated Security=True";
+        private SqlConnection connection;
+        public DeliveryPersonManager()
+        {
+            connection = new SqlConnection(connectionString);
+        }
+
+        public DeliveryPersonModel Get(int id)
+        {
+            var item = new DeliveryPersonModel();
+            try
+            {
+                connection.Open();
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = string.Format("select Workers.Name,Users.Username, Users.Email, Addresses.City, Addresses.Street, Addresses.Number  from Delivery_Person join Workers on Delivery_Person.Delivery_Id = Workers.Worker_Id join Users on Workers.Worker_Id = Users.Id join Addresses on Delivery_Person.Address_ID = Addresses.ID where Delivery_Person.Delivery_Id = {0}", id);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            item.Name = reader.GetString(reader.GetOrdinal("Name"));
+                            item.Username = reader.GetString(reader.GetOrdinal("Username"));
+                            item.Email = reader.GetString(reader.GetOrdinal("Name"));
+                            item.Address = reader.GetString(reader.GetOrdinal("Number")) +
+                                           reader.GetString(reader.GetOrdinal("Street")) +
+                                            reader.GetString(reader.GetOrdinal("City"));
+
+                        }
+                    };
+                };
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return item;
+        }
+    }
+}
