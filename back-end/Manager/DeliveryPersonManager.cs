@@ -1,15 +1,15 @@
 using back_end.Models;
 using System.Data.SqlClient;
+using dbSettings.DataAccess;
 
 namespace back_end.Managers
 {
     public class DeliveryPersonManager
     {
-        private const string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=Supermarket_DB;Integrated Security=True";
         private SqlConnection connection;
         public DeliveryPersonManager()
         {
-            connection = new SqlConnection(connectionString);
+            connection = new SqlConnection(AppSettings.ConnectionString);
         }
 
         public DeliveryPersonModel Get(int id)

@@ -71,7 +71,9 @@ GO
 CREATE TABLE Delivery_Person(
 	Delivery_Id int foreign key references Workers(Worker_Id),
 	Social_Id VARCHAR(24) NOT NULL unique,
-	primary key(Delivery_id)
+	primary key(Delivery_id),
+	Address_ID int,
+    Foreign key(Address_ID) references Addresses(ID)
 )
 
 GO
