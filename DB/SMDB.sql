@@ -68,10 +68,13 @@ CREATE TABLE Workers(
 
 GO
 
+
 CREATE TABLE Delivery_Person(
 	Delivery_Id int foreign key references Workers(Worker_Id),
 	Social_Id VARCHAR(24) NOT NULL unique,
-	primary key(Delivery_id)
+	primary key(Delivery_id),
+	Address_ID int,
+    Foreign key(Address_ID) references Addresses(ID)
 )
 
 GO
@@ -133,7 +136,7 @@ CREATE TABLE Workers_Branches(
  Branch_Name varchar(50) foreign key references Branches(Branch_Name),
  Worker_Id int foreign key references Workers(Worker_Id),
  Schedule varchar(100),
- sPRIMARY KEY(Worker_Id,Branch_Name)
+ PRIMARY KEY(Worker_Id,Branch_Name)
  )
 
 GO
@@ -222,6 +225,25 @@ CREATE TABLE TCT(
 	Foreign key(Terminal_ID, Branch_Name) references Terminals(Id, Branch_Name),
 	Cashier_Id int foreign key references Cashiers(Cashier_Id),
 	Primary Key(Transaction_Id,Terminal_Id)
+)
+
+GO
+
+CREATE TABLE Preferences(
+	Preference_Id int identity(1,1),
+	Customer_Id int not null foreign key references Customers([User_Id]),
+	[text] varchar(200),
+	primary key(Preference_Id)
+)
+
+GO
+
+CREATE TABLE Orders_Products(
+	Order_Id bigint foreign key references Orders(Order_Id),
+	Product_code char(14) foreign key references Products(Barcode),
+	Quantity int not null,
+	Customer_Id int not null foreign key references Customers([User_Id]),
+	Id int identity(1,1) primary key
 )
 
 GO

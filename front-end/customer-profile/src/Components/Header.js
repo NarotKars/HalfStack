@@ -1,6 +1,22 @@
 import React from 'react';
 import customer from './customer.png';
 class Header extends React.Component {
+    constructor(props){
+        super(props);
+        this.state={personalInfo:[]}
+    }
+    componentDidMount()
+    {
+        const that = this;
+        fetch("https://localhost:5001/customer/getbyid/1")
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(jsonStr) {
+            that.setState({ personalInfo: jsonStr });
+            console.log(that.state.personalInfo)
+        }).catch((err)=>{console.log(err);})
+    }
     render() {
         return(
             <div id="header">
@@ -16,10 +32,10 @@ class Header extends React.Component {
                         <li>Address:</li>
                     </div>
                     <div className="list">
-                        <li>Narot Kars Karapetian</li>
-                        <li>+374 11111111</li>
-                        <li>garabediangars@gmail.com</li>
-                        <li>Aleq Manukyan 1/1</li>
+                        <li>{this.state.personalInfo.name}</li>
+                        <li>{this.state.personalInfo.phone_Number}</li>
+                        <li>{this.state.personalInfo.email}</li>
+                        <li>{this.state.personalInfo.address}</li>
                     </div>
                 </div>
             </div>

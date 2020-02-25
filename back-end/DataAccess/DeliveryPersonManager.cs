@@ -1,15 +1,18 @@
 using back_end.Models;
 using System.Data.SqlClient;
-
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Text;
+using dbSettings.DataAccess;
 namespace back_end.Managers
 {
     public class DeliveryPersonManager
     {
-        private const string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=Supermarket_DB;Integrated Security=True";
         private SqlConnection connection;
         public DeliveryPersonManager()
         {
-            connection = new SqlConnection(connectionString);
+            connection = new SqlConnection(AppSettings.ConnectionString);
         }
 
         public DeliveryPersonModel Get(int id)
@@ -22,7 +25,7 @@ namespace back_end.Managers
                 {
                     cmd.Connection = connection;
                     cmd.CommandText = string.Format("select Workers.Name,Users.Username, Users.Email, Addresses.City, Addresses.Street, Addresses.Number  from Delivery_Person join Workers on Delivery_Person.Delivery_Id = Workers.Worker_Id join Users on Workers.Worker_Id = Users.Id join Addresses on Delivery_Person.Address_ID = Addresses.ID where Delivery_Person.Delivery_Id = {0}", id);
-
+                    Console.WriteLine(id);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())

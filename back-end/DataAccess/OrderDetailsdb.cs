@@ -7,12 +7,12 @@ using System.Text;
 
 namespace dbSettings.DataAccess
 {
-    public class Orderdb
+    public class OrderDetailsdb
     {
-        public List<Order> GetOrdersAsGenericList(int id)
+        public List<OrderDetails> GetOrderDetailsAsGenericList(int id)
         {
-            List<Order> orders = new List<Order>();
-            string sql = "SELECT Order_Id, Customer_Id, Order_Date, City, Street, Number, Status FROM Orders join Addresses on Orders.Address_ID=Addresses.ID WHERE Customer_Id = '{0}'";
+            List<OrderDetails> orders = new List<OrderDetails>();
+            string sql = "select Orders_Products.Id, Customer_Id, Orders_Products.Order_Id, Products.Name, Orders_Products.quantity from Products join Orders_Products on Orders_Products.Product_code=Products.Barcode where Orders_Products.Customer_Id='{0}'";
             StringBuilder errorMessages = new StringBuilder();
             try
             {
@@ -25,15 +25,13 @@ namespace dbSettings.DataAccess
                         {
                             while (dataReader.Read())
                             {
-                                orders.Add(new Order
+                                orders.Add(new OrderDetails
                                 {
-                                    orderId=dataReader.GetInt64(dataReader.GetOrdinal("Order_Id")),
-                                    customerId=dataReader.GetInt32(dataReader.GetOrdinal("Customer_Id")),
-                                    orderDate=dataReader.GetDateTime(dataReader.GetOrdinal("Order_Date")),
-                                    address= dataReader.GetString(dataReader.GetOrdinal("City")) +
-                                             dataReader.GetString(dataReader.GetOrdinal("Street")) +
-                                             dataReader.GetString(dataReader.GetOrdinal("Number")),
-                                    status = dataReader.GetString(dataReader.GetOrdinal("Status")),
+                                    id = dataReader.GetInt32(dataReader.GetOrdinal("Id")),
+                                    orderId= dataReader.GetInt64(dataReader.GetOrdinal("Order_Id")),
+                                    customerId = dataReader.GetInt32(dataReader.GetOrdinal("Customer_Id")),
+                                    product = dataReader.GetString(dataReader.GetOrdinal("Name")),
+                                    quantity = dataReader.GetInt32(dataReader.GetOrdinal("Quantity")),
                                 });
                             }
                         }

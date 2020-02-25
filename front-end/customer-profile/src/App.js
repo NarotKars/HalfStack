@@ -26,8 +26,7 @@ class App extends React.Component {
           <Header/>
           <Menu handleStateChange={this.handleStateChange} />
           {this.state.num===1 ? <CurrentOrder /> : 
-           this.state.num===2 ? <OrderHistory />  : 
-           this.state.num===3 ? <FeedbackPreferences/> : <Menu/>}
+           this.state.num===2 ? <OrderHistory />  : <FeedbackPreferences/>}
 
       </div>
     );

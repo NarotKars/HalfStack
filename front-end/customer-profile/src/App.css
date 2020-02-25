@@ -78,18 +78,39 @@ li{
   list-style-type:none
 }
 
-.tableWrapper
+
+.fakeTableHeader
 {
   margin-top: 2%;
-  display:flex;
-  justify-content: center;
-  align-items: center;
+  border: 1px solid #ddd;
+  padding: 1%;
+  background-color: #07afdc;
+  color: white;
 }
+.fakeTable
+{
+  border: 1px solid #ddd;
+  padding: 1%;
+  cursor: pointer;
+  background-color: white;
+}
+.td{
+  margin: 2%;
+}
+.tableWrapper div:nth-child(even){background-color: #f2f2f2;}
 
+
+.tableWrapper
+{
+  width:50%;
+  margin: auto;
+}
 #c_order{
   border-collapse: collapse;
   width: 50%;
   box-shadow: 0 8px 8px -6px rgba(0, 0, 0, 0.486);
+  background-color: #ffffff;
+  
 }
 
 #c_order td{
@@ -121,6 +142,10 @@ li{
 .btn1
 {
   margin-left: 2%;
+  width: 15%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 20px;
+  cursor: pointer;
 }
 
 .btn2{
@@ -129,8 +154,70 @@ bottom:10px;
 right:10px;
 }
 
+.prefWrapper
+{
+  padding-top: 1%;
+  padding-bottom: 1%;
+  background-color: #1fbce4;
+  width: 50%;
+  margin: auto;
+  border-radius: 23.5px;
+  color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: left;
+}
+
+.prefInput
+{
+  margin-left: 25%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 20px;
+  width: 30%;
+  padding: 1%;
+}
+.editInput
+{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 20px;
+  width: 35%;
+  padding: 0.5%;
+}
 .pref
 {
-  margin-top: 2%;
-  margin-bottom: 2%;
+  margin-right: 1%;
+  margin-left: 1%;
+ font-size: 1.5vw;
 }
+
+.prefs
+{
+  margin: 4%;
+}
+#CRM
+{
+margin-top: 2%;
+margin-bottom: 2%;
+font-family: Segoe Script;
+color: #05419b;
+/*font-family: Gabriola;*/
+font-style: italic;
+font-size: 2vw;
+}
+
+.eimg
+{
+  position: absolute;
+  right: 33%;
+  cursor: pointer;
+  width: 2%;
+}
+
+.dimg
+{
+  position: absolute;
+  right: 28%;
+  cursor: pointer;
+  width: 2%;
+
+}
+
