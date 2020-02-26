@@ -54,7 +54,7 @@ namespace back_end.Managers
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = connection;
-                    cmd.CommandText = string.Format("Update Orders set Feedback={0} where Order_Id= {1}", model.Feedback, model.Id);
+                    cmd.CommandText = string.Format("Update Orders set Feedback='{0}' where Order_Id= {1}", model.Feedback, model.Id);
                     cmd.ExecuteNonQuery();
                 }
             }
