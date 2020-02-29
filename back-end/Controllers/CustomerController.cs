@@ -92,5 +92,53 @@ namespace back_end.Controllers
             return  orderDetails;
         }
         
+        
+        UserCustomerDB user = new UserCustomerDB();
+
+        
+
+
+        [Route("getbyid/{id}")]
+        [HttpGet]
+        public ActionResult GetById(int id)
+        {
+            try
+            {
+
+                var users = user.ReadById(id);
+
+                return Ok(users);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+         UserCustomerDB user = new UserCustomerDB();
+
+
+        [Route("updatee")]
+        [HttpPut]
+        public ActionResult UpDatee(Update us)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var users = user.Updatet(us);
+
+                    if (users == null) return NotFound();
+                    return Ok(users);
+                }
+            }
+            catch
+            {
+                return BadRequest();
+
+
+            }
+            return BadRequest(ModelState);
+        }
     }
 }
