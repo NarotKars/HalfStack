@@ -4,11 +4,14 @@ class CurrentOrder extends React.Component {
     constructor(props) {
         super(props);
         this.seeDetails=this.seeDetails.bind(this);
+        this.OrderFeedback=this.OrderFeedback.bind(this);
+        this.saveFeedback=this.saveFeedback.bind(this);
         this.state={
             orders: [],
             products: [],
             showDetails: [],
-            orderDetails: []
+            orderDetails: [],
+            orderFeeback: ''
         }
     }
 
@@ -42,6 +45,13 @@ class CurrentOrder extends React.Component {
         }).catch((err)=>{console.log(err);})
   }
 
+  OrderFeedback(e)
+    {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
   seeDetails = (id) => {
     const j=this.state.orders.map(item => item.orderId).indexOf(id);
     var showPrevDetails=[...this.state.showDetails];
@@ -61,10 +71,25 @@ class CurrentOrder extends React.Component {
     
     const orderdetails =this.state.products.filter(item => item.orderId===id);
     this.setState({showDetails: [...showdetails],
+                    orderFeedback:'',
                    orderDetails: orderdetails})
     }
     o=0;
   } 
+  saveFeedback=(id) => {
+    const fb={
+        Id: id,
+        feedback: this.state.orderFeedback
+    }
+    fetch('https://localhost:5001/api/orders/feedback', {
+        method: 'PUT',
+        body: JSON.stringify(fb),
+        headers: {
+            "Content-type" : "application/json"
+        }
+    })
+    this.setState({orderFeedback:''});
+  }
     render() {
         return(
             <div>
@@ -75,16 +100,24 @@ class CurrentOrder extends React.Component {
                         <span className="td">Address</span>
                         <span className="td">Status</span>
                     </div>
-                {
+                {o=0,
                 this.state.orders.map(item => {
                     o++;
                         return (
-                            <div key={item.orderId} onClick={() => this.seeDetails(item.orderId)} className="fakeTable">
+                            <div key={item.orderId} className="fakeTable">
                              <span className="td">{o}</span>
                              <span className="td">{item.orderDate}</span>
                              <span className="td">{item.address}</span>
                              <span className="td">{item.status}</span>
-                        {this.state.showDetails[o-1] ? this.state.orderDetails.map(it =>{return(<div className="productDetails" key={it.id}><span className="td">{it.product}</span><span className="td">{it.quantity}</span></div>)}) : ''}
+                             <button onClick={() => this.seeDetails(item.orderId)}>see details</button>
+                        {this.state.showDetails[o-1] ? this.state.orderDetails.map(it =>{return(<div className="productDetails" key={it.id}>
+                                                                                                    <span className="td">{it.product}</span>
+                                                                                                    <span className="td">{it.quantity}</span>
+                                                                                                    <div>
+                                                                                                        <input type="text" onChange={this.OrderFeedback} name="orderFeedback" value={this.state.orderFeedback}></input>
+                                                                                                        <button onClick={() => this.saveFeedback(it.orderId)}>OK</button>
+                                                                                                    </div>
+                                                                                                </div>)}) : ''}
                             </div>
                     )})
                 }

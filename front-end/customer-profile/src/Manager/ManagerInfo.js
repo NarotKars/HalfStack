@@ -7,22 +7,19 @@ class ManagerInfo extends React.Component {
   constructor(props){
     super(props);
     this.state={
-      Name:'',
-      Email:'',
-      Address:'',
+      PersonalInfo:[]
     }
   }
-
   componentDidMount() {
-    axios.get('http://localhost:44390/getbyid/7',)
-     .then((response) => {
-       this.setState({
-        Name:response.data.Name,
-        Email:response.data.Email,
-        Address:response.data.Address
-
-    })
-     });
+    const that = this;
+        fetch("https://localhost:5001/getbyid/7")
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(jsonStr) {
+            that.setState({ PersonalInfo: jsonStr });
+            console.log(that.state.PersonalInfo)
+        }).catch((err)=>{console.log(err);})
  }
 
   render() {
@@ -32,11 +29,10 @@ class ManagerInfo extends React.Component {
                 <br/>
                 <img src={manager} alt="manager" />
             </div>
-            <div div className="listWrapper">
+             <div div className="listWrapper"> 
                 <div className="list">
-                    <li>Name:{this.state.Name}</li>
-                    <li>Email:{this.state.Email}</li>
-                    <li>Address:{this.state.Address}</li>
+                    <li>Name:{this.state.PersonalInfo.name}</li>
+                    <li>Email:{this.state.PersonalInfo.email}</li>
                 </div>  
             </div>
         </div>

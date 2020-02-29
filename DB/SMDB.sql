@@ -167,7 +167,14 @@ CREATE TABLE Products_input_date (
 )
 
 GO
+select * from TCT
+select * from Transactions
+select * from Branches
+select * from Products_in_Branches
+select * from Orders
 
+insert into Orders(Order_Id,Customer_Id, Delivery_Id, Order_Date, Order_Confirm_Date, Planned_Delivery_Receive_Date, Address_ID, Status)
+Values (6,1,6,'2020-03-08 12:35:29.000','2020-03-08 13:00:00.000','2020-03-08 18:30:00.000',9,'new')
 CREATE TABLE Products_in_Branches (
 	Product_code char(14) foreign key references Products(Barcode),
 	Branch_name varchar(50) foreign key references Branches(Branch_Name),
@@ -176,6 +183,8 @@ CREATE TABLE Products_in_Branches (
 )
 
 GO
+
+	SELECT * FROM Transaction_Products
 
 Create Table Transaction_Products(
 	TransactionID bigint foreign key references Transactions(Id),
@@ -247,3 +256,26 @@ CREATE TABLE Orders_Products(
 )
 
 GO
+
+select Orders_Products.Order_Id, Orders_Products.Quantity, Products.Name, Addresses.City, Addresses.Street, Addresses.Number, Orders.Status
+from Orders_Products
+join Products on Products.Barcode=Orders_Products.Product_code
+join Customers on Customers.User_Id=Orders_Products.Customer_Id
+join Addresses on Addresses.ID=Customers.Address_ID
+join Orders on Orders.Order_Id=Orders_Products.Order_Id
+	
+
+select * from Products
+select * from Orders_Products
+select * from Products_in_Branches
+insert into Orders_Products(Order_Id,Product_code,Quantity, Customer_Id)
+values(6,'5456364',10,1),
+		(6,'545475874',5,1),
+		(6,'5453454',5,1)
+
+
+		select * from Orders_Products
+
+delete from Orders_Products where Order_Id=6
+
+select * from Orders

@@ -7,23 +7,21 @@ class OrdersList extends React.Component{
     super(props);
     this.state={
         orders: [],
-        productList1: [{barcode: 111, name: 'milk'},
-                       {barcode: 222, name: 'bread'},
-                       {barcode: 333, name: 'tomato'}],
-        productList2: [{barcode: 444, name: 'sugar'},
-                       {barcode: 555, name: 'apple'},
-                       {barcode: 666, name: 'pencil'}],
     }
   }
 
   componentDidMount()
   {
-        axios.get('http://localhost:44390/api/Orders/{0}',this.props.status)
-        .then((response) => {
-          this.setState({oders: response.data})
-        });
+    const that = this;
+    fetch("https://localhost:5001/customer/orders/1/")
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(jsonStr) {
+            that.setState({orders: jsonStr});
+            console.log(that.state.showDetails)
+        }).catch((err)=>{console.log(err);})
   }
-
 
   render() {
     return(
@@ -43,10 +41,10 @@ class OrdersList extends React.Component{
                 this.state.orders.map(item => {
                     i++;
                         return (
-                            <tr key={item.order_Id} onClick={() => this.seeDetails(item.order_Id)}>
+                            <tr key={item.orderId} onClick={() => this.seeDetails(item.order_Id)}>
                              <td>{i}</td>
-                             <td>{item.order_Date}</td>
-                             <td>{item.city}</td>
+                             <td>{item.orderDate}</td>
+                             <td>{item.address}</td>
                              <td>{item.status}</td>
                             </tr>
                     )})

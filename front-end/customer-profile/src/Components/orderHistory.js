@@ -21,7 +21,7 @@ class OrderHistory extends React.Component {
             return response.json();
         })
         .then(function(jsonStr) {
-            var r=jsonStr.filter(item => item.status!=='in time')
+            var r=jsonStr.filter(item => item.status!=='in time' && item.status!='new')
             for(var j=0; j<r.length;j++)
             {
                 showdetails.push(false);
@@ -77,6 +77,7 @@ seeDetails = (id) => {
                         <span className="td">Status</span>
                     </div>
                 {
+                    m=0,
                 this.state.orders.map(item => {
                     m++;
                         return (

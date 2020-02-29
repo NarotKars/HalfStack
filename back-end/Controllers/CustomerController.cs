@@ -91,28 +91,6 @@ namespace back_end.Controllers
             List<OrderDetails> orderDetails= orderdDetailsdb.GetOrderDetailsAsGenericList(id);
             return  orderDetails;
         }
-
-
-
-
-        UserCustomerDB user = new UserCustomerDB();
-
-        [Route("getbyid/{id}")]
-        [HttpGet]
-        public ActionResult GetById(int id)
-        {
-            try
-            {
-
-                var users = user.ReadById(id);
-
-                return Ok(users);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-        }
         
     }
 }
