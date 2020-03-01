@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using back_end.Models;
-using back_end.Managers;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using dbSettings.DataAccess;
@@ -10,7 +9,30 @@ namespace back_end.Controllers
     public class OrderController : ControllerBase
     {
         private OrderManager manager = new OrderManager();
-        private theAlgorithm item=new theAlgorithm();
+
+        [HttpGet("/manager/orders")]
+        public IEnumerable<Order> ManagerOrders()
+        {
+            Orderdb orderManager=new Orderdb();
+            List<Order> managers= orderManager.GetAllOrdersAsGenericList();
+            return  managers;
+        }
+
+        [HttpGet("/customer/orders/{id}")]
+        public IEnumerable<Order> Orders(int id)
+        {
+            Orderdb orderdb=new Orderdb();
+            List<Order> orders= orderdb.GetOrdersAsGenericList(id);
+            return  orders;
+        }
+
+        [HttpGet("/customer/orders/details/{id}")]
+        public IEnumerable<OrderDetails> OrdersDetails(int id)
+        {
+            OrderDetailsdb orderdDetailsdb=new OrderDetailsdb();
+            List<OrderDetails> orderDetails= orderdDetailsdb.GetOrderDetailsAsGenericList(id);
+            return  orderDetails;
+        }
 
         [HttpGet]
         [Route("api/Orders/Feedback/{id}")]
@@ -44,21 +66,6 @@ namespace back_end.Controllers
             }
         }
 
-        [HttpGet("/manager/orders")]
-        public IEnumerable<Order> ManagerOrders()
-        {
-            Orderdb orderManager=new Orderdb();
-            List<Order> managers= orderManager.GetAllOrdersAsGenericList();
-            return  managers;
-        }
-
-        [HttpGet("/products/{id}")]
-        public IEnumerable<OrderProduct> OrdersDetails(int id)
-        {
-            theAlgorithm algorithm=new theAlgorithm();
-            List<OrderProduct> orderDetails= algorithm.GetAllProductsAsGenericList(id);
-            return  orderDetails;
-        }
-
+       
     }
 }

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using backend.Models;
-using backend.Managers;
+using dbSettings.DataAccess;
+using back_end.Models;
 
-namespace backend.Controllers
+namespace back_end.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
