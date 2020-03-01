@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 namespace back_end.Models
 {
     public class OrderProduct

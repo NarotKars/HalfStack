@@ -1,8 +1,8 @@
-using back_end.Managers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using dbSettings.DataAccess;
 
-namespace backend.Controllers
+namespace back_end.Controllers
 {
     [ApiController]
     public class DeliveryPersonController : ControllerBase

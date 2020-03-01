@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Text;
 
-namespace back_end.DataAccess
+namespace dbSettings.DataAccess
 {
     public class FeedbackDAL
     {

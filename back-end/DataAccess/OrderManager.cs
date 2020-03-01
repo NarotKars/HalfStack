@@ -1,8 +1,7 @@
 using System.Data.SqlClient;
 using back_end.Models;
-using dbSettings.DataAccess;
 
-namespace back_end.Managers
+namespace dbSettings.DataAccess
 {
     public class OrderManager
     {

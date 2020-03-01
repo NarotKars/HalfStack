@@ -1,11 +1,7 @@
 using back_end.Models;
-using System.Data.SqlClient;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Text;
-using dbSettings.DataAccess;
-namespace back_end.Managers
+
+namespace dbSettings.DataAccess
 {
     public class DeliveryPersonManager
     {
