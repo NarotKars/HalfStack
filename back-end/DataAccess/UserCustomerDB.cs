@@ -66,7 +66,7 @@ namespace dbSettings.DataAccess
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = _connnection;
-                    cmd.CommandText = string.Format("update  Users set Username='{0}',Email='{1}' from Users join Customers on Customers.User_Id=Users.Id where Customers.User_Id='{2}'", user.Name, user.Email, user.Id);
+                    cmd.CommandText = string.Format("update Customers set Name='{0}' where Customers.User_Id='{1}'", user.Name,user.Id);
 
                     cmd.ExecuteNonQuery();
 
