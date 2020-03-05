@@ -1,9 +1,8 @@
 import React from 'react';
-import { Redirect,Route,Switch } from 'react-router-dom';
-import './App.css';
-import Customer from './Components/App';
-import Manager from './Manager/ManagerPage';
-import Delivery from './Delivery/App';
+
+import Customer from './customer/App';
+// import Manager from './manager/ManagerPage';
+// import Delivery from './delivery/App.js';
 
 class App extends React.Component {
   render()
