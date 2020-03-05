@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
+﻿using back_end.Models;
 using System.Data.SqlClient;
-using backend.Models;
-namespace backend.Managers
+
+namespace dbSettings.DataAccess
 {
     public class OrderStatusDB
     {
