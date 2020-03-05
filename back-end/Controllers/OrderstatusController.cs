@@ -1,13 +1,10 @@
-﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using backend.Managers;
-using backend.Models;
+using Microsoft.Extensions.Logging;
+using back_end.Models;
+using dbSettings.DataAccess;
 
-namespace backend.Controllers
+namespace back_end.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
