@@ -12,6 +12,43 @@ namespace dbSettings.DataAccess
             connection = new SqlConnection(AppSettings.ConnectionString);
         }
 
+          public List<Order> GetOrdersAsGenericList(int num)
+        {
+            List<Order> orders = new List<Order>();
+            string sql = "SELECT Order_Id, Customer_Id, Order_Date, City, Street, Number FROM Orders join Addresses on Orders.Address_ID=Addresses.ID WHERE  Status='new'";
+
+            try
+            {
+                using (SqlCommand command = new SqlCommand(string.Format(sql, num), connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            orders.Add(new Order
+                            {
+                                orderId = dataReader.GetInt64(dataReader.GetOrdinal("Order_Id")),
+                                customerId = dataReader.GetInt32(dataReader.GetOrdinal("Customer_Id")),
+                                orderDate = dataReader.GetDateTime(dataReader.GetOrdinal("Order_Date")),
+                                address = dataReader.GetString(dataReader.GetOrdinal("City")) +
+                                         dataReader.GetString(dataReader.GetOrdinal("Street")) +
+                                         dataReader.GetString(dataReader.GetOrdinal("Number"))
+                            });
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return orders;
+        }
         public string Get(int id)
         {
             string feedback = "";
