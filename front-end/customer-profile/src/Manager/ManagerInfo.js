@@ -1,7 +1,6 @@
 import React from 'react';
 import manager from './manager.png'; 
 import '../App.css';
-const axios = require('axios').default;
 
 class ManagerInfo extends React.Component {
   constructor(props){
@@ -12,7 +11,7 @@ class ManagerInfo extends React.Component {
   }
   componentDidMount() {
     const that = this;
-        fetch("https://localhost:5001/getbyid/7")
+        fetch("https://localhost:44390/manager/getbyid/7")
         .then(function(response) {
             return response.json();
         })
