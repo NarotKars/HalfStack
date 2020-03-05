@@ -1,5 +1,6 @@
 using back_end.Models;
 using System.Data;
+using System.Collections.Generic;
 
 namespace dbSettings.DataAccess
 {
@@ -42,6 +43,38 @@ namespace dbSettings.DataAccess
             {
                 connection.Close();
             }
+            return item;
+        }
+
+        public List<int> GetByStatus()
+        {
+            var item = new List<int>();
+            try
+            {
+                connection.Open();
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = string.Format("select Delivery_Id from Delivery_Person where Status='free'");
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            item.Add(reader.GetInt32(reader.GetOrdinal("Delivery_Id")));
+                        }
+                    };
+                };
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
             return item;
         }
     }

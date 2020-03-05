@@ -60,7 +60,7 @@ namespace dbSettings.DataAccess
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = _connnection;
-                    cmd.CommandText = string.Format("update  Users set username='{0}',Email='{1}' from Users inner join Workers on Workers.Worker_Id=Users.id where Workers.Worker_Id='{2}'", user.Name, user.Email, user.Id);
+                    cmd.CommandText = string.Format("update Workers set Name ='{0}' where Worker_Id='{1}'", user.Name, user.Id);
 
                     cmd.ExecuteNonQuery();
                 }
