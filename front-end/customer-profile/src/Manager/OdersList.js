@@ -1,4 +1,4 @@
-import React from 'react';
+import React from './node_modules/react';
 let i=0;
     
 class OrdersList extends React.Component{

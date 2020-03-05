@@ -4,7 +4,9 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import Manager from './Manager/ManagerPage';
-ReactDOM.render(<App />, document.getElementById('root'));
+
+var id=6
+ReactDOM.render(<App userid={id} />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
