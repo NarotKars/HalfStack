@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import Manager from './Manager/ManagerPage';
 
 var id=6
 ReactDOM.render(<App userid={id} />, document.getElementById('root'));

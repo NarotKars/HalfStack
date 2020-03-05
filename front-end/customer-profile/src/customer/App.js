@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import '../App.css';
 import Header from './Header';
 import Menu from './menu';
 import FeedbackPreferences from './feedbackPreferences';
