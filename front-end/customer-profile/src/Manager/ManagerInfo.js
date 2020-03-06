@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import manager from './manager.png'; 
 import '../App.css';
 

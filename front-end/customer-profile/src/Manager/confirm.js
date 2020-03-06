@@ -1,7 +1,7 @@
 import React from 'react';
 let i=0;
     
-class OrdersList extends React.Component{
+class Confirm extends React.Component{
   constructor(props) {
     super(props);
     this.state={
@@ -17,7 +17,7 @@ class OrdersList extends React.Component{
   seeDetails = (id) => {
     const that = this;
     that.state.showDetails=true;
-    fetch("https://localhost:5001/manager/order/details/6/")
+    fetch("https://localhost:44390/manager/order/details/6/")
         .then(function(response) {
             return response.json();
         })
@@ -42,7 +42,7 @@ class OrdersList extends React.Component{
       body: JSON.stringify(someData)
      }
      
-     fetch("https://localhost:5001/manager/order/update", putMethod)
+     fetch("https://localhost:44390/manager/order/update", putMethod)
      .then(response => response.json())
   }
 
@@ -64,9 +64,9 @@ class OrdersList extends React.Component{
 
   componentDidMount()
   {
-    console.log(this.state.status,"hggf");
+    console.log(this.props.status,"confirmed");
     const that = this;
-    fetch("https://localhost:44390/manager/orders/" + this.state.status)
+    fetch("https://localhost:44390/manager/orders/"+this.props.status )
         .then(function(response) {
             return response.json();
         })
@@ -93,10 +93,9 @@ class OrdersList extends React.Component{
             <tbody>
             {
                 this.state.orders.map(item => {
-                  i++;
                         return (
                             <tr key={item.orderId} >
-                             <td>{}</td>
+                             <td>{i++}</td>
                              <td>{item.orderDate}</td>
                              <td>{item.address}</td>
                              <td>{item.status}</td>
@@ -122,4 +121,4 @@ class OrdersList extends React.Component{
   
 }
 
-export default OrdersList;
+export default Confirm;
