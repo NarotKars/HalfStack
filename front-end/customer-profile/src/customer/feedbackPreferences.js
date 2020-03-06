@@ -138,6 +138,18 @@ class Feedback extends React.Component{
           preferences:[...deleted],
     })
   }
+  postFeedback = () => {
+   const newFeedback={
+       User_Id: 1,
+       Text: this.state.feedback
+   }
+    fetch('https://localhost:5001/feedback/1', { 
+        method: 'POST',
+        body: JSON.stringify(newFeedback), 
+        headers:{ 'Content-Type': 'application/json' } })
+        .catch(error => console.error('Error:', error))
+        this.setState({feedback:''});
+  }
     render() {
         i=1;
         return (
@@ -147,7 +159,7 @@ class Feedback extends React.Component{
                 </div>
                 <div className="prefWrapper">
                     <input onChange={this.SetPreference} name="preference" value={this.state.preference} className="prefInput"></input>
-                    <button className="btn1" onClick={this.addPref}>Add</button>
+                    <button className="addPref" onClick={this.addPref}>Add</button>
                     {
                         this.state.preferences.map(item => {
                             if(this.state.update[i-1])
@@ -173,7 +185,7 @@ class Feedback extends React.Component{
                 </div>
                 <div className="feed">
                     <textarea onChange={this.SetFeedback} name="feedback" value={this.state.feedback} cols="80" rows="7"></textarea>
-                    <button className="btn2">OK</button>
+                    <button onClick={()=>this.postFeedback()} className="okBtn2">OK</button>
                 </div>
             </div>
         )

@@ -5,14 +5,11 @@ namespace dbSettings.DataAccess
 {
     public class UserManagerDB
     {
-        private const string _coneectionString = @"Data Source=.\SQLEXPRESS1;Initial Catalog=PersonalInfo_DB;Integrated Security=True";
-
-
         private SqlConnection _connnection;
 
         public UserManagerDB()
         {
-            _connnection = new SqlConnection(_coneectionString);
+            _connnection = new SqlConnection(AppSettings.ConnectionString);
         }
 
 
@@ -60,7 +57,7 @@ namespace dbSettings.DataAccess
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = _connnection;
-                    cmd.CommandText = string.Format("update Workers set Name ='{0}' where Worker_Id='{1}'", user.Name, user.Id);
+                    cmd.CommandText = string.Format("update  Users set username='{0}',Email='{1}' from Users inner join Workers on Workers.Worker_Id=Users.id where Workers.Worker_Id='{2}'", user.Name, user.Email, user.Id);
 
                     cmd.ExecuteNonQuery();
                 }
@@ -79,4 +76,3 @@ namespace dbSettings.DataAccess
 
     }
 }
-

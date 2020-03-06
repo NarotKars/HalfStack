@@ -11,7 +11,7 @@ class CurrentOrder extends React.Component {
             products: [],
             showDetails: [],
             orderDetails: [],
-            orderFeeback: ''
+            orderFeedback: [] 
         }
     }
 
@@ -27,12 +27,9 @@ class CurrentOrder extends React.Component {
         .then(function(jsonStr) {
             var r=jsonStr.filter(item => item.status==='in time')
             for(var j=0; j<r.length;j++)
-            {
                 showdetails.push(false);
-            }
             that.setState({orders: r,
                 showDetails: showdetails});
-            console.log(that.state.showDetails)
         }).catch((err)=>{console.log(err);})
 
         fetch("https://localhost:5001/customer/orders/details/1")
@@ -45,11 +42,13 @@ class CurrentOrder extends React.Component {
         }).catch((err)=>{console.log(err);})
   }
 
-  OrderFeedback(e)
+  OrderFeedback(e,id)
     {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+        var feed=[...this.state.orderFeedback];
+        const index=this.state.orders.map(item => item.orderId).indexOf(id);
+        console.log(index);
+        feed[index]=e.target.value;
+        this.setState({orderFeedback: feed});
     }
 
   seeDetails = (id) => {
@@ -77,9 +76,10 @@ class CurrentOrder extends React.Component {
     o=0;
   } 
   saveFeedback=(id) => {
+    const index=this.state.orders.map(item => item.orderId).indexOf(id);
     const fb={
         Id: id,
-        feedback: this.state.orderFeedback
+        feedback: this.state.orderFeedback[index]
     }
     fetch('https://localhost:5001/api/orders/feedback', {
         method: 'PUT',
@@ -88,41 +88,66 @@ class CurrentOrder extends React.Component {
             "Content-type" : "application/json"
         }
     })
-    this.setState({orderFeedback:''});
+    var f=[...this.state.orderFeedback];
+    f[index]='';
+    this.setState({orderFeed:'',
+                  orderFeedback: f});
   }
     render() {
         return(
-            <div>
             <div className="tableWrapper">
                     <div className="fakeTableHeader">
-                        <span className="td">#</span>
-                        <span className="td">Date</span>
-                        <span className="td">Address</span>
-                        <span className="td">Status</span>
+                        <div className="fakeTableCol">#</div>
+                        <div className="fakeTableCol">Date</div>
+                        <div className="fakeTableCol">Address</div>
+                        <div className="fakeTableCol">Status</div>
+                        <div className="fakeTableCol">Feedback</div>
+                        <div className="fakeTableCol">Details</div>
                     </div>
                 {o=0,
                 this.state.orders.map(item => {
                     o++;
                         return (
-                            <div key={item.orderId} className="fakeTable">
-                             <span className="td">{o}</span>
-                             <span className="td">{item.orderDate}</span>
-                             <span className="td">{item.address}</span>
-                             <span className="td">{item.status}</span>
-                             <button onClick={() => this.seeDetails(item.orderId)}>see details</button>
-                        {this.state.showDetails[o-1] ? this.state.orderDetails.map(it =>{return(<div className="productDetails" key={it.id}>
-                                                                                                    <span className="td">{it.product}</span>
-                                                                                                    <span className="td">{it.quantity}</span>
-                                                                                                    <div>
-                                                                                                        <input type="text" onChange={this.OrderFeedback} name="orderFeedback" value={this.state.orderFeedback}></input>
-                                                                                                        <button onClick={() => this.saveFeedback(it.orderId)}>OK</button>
-                                                                                                    </div>
+                            <div className="fakeTableWrapper" key={o}>
+                            <div key={item.orderId} className="fakeTableRow">
+                             <div className="fakeTableCol">{o}</div>
+                             <div className="fakeTableCol">{item.orderDate}</div>
+                             <div className="fakeTableCol">{item.address}</div>
+                             <div className="fakeTableCol">{item.status}</div>
+                             <div className="fakeTableCol">
+                                <input type="text" onChange={(e) => this.OrderFeedback(e,item.orderId)} name="orderFeed" value={this.state.orderFeedback[o-1]} className="orderFeed"></input>
+                                <button onClick={() => this.saveFeedback(item.orderId)} className="okBtn">OK</button>
+                             </div>
+                             {this.state.showDetails[o-1] ? 
+                             <div className="fakeTableCol"><button onClick={() => this.seeDetails(item.orderId)} className="seeDetailsBtn">hide details</button></div>:
+                             <div className="fakeTableCol"><button onClick={() => this.seeDetails(item.orderId)} className="seeDetailsBtn">see details</button></div>}
+                            </div>
+                        {this.state.showDetails[o-1] ? <div className="fakeDetailTableHeader">
+                                                            <div className="fakeTableCol"></div>
+                                                            <div className="fakeTableCol">Category Name</div>
+                                                            <div className="fakeTableCol">Product Name</div>
+                                                            <div className="fakeTableCol">Quantity</div>
+                                                            <div className="fakeTableCol">Price</div>
+                                                            <div className="fakeTableCol"></div>
+                                                        </div> : ''}
+                        {this.state.showDetails[o-1] ? this.state.orderDetails.map(it =>{return(<div className="fakeDetailsTableRow" key={it.id}>
+                                                                                                    <div className="fakeDetailsTableCol"></div>
+                                                                                                    <div className="fakeDetailsTableCol">{it.categoryName}</div>
+                                                                                                    <div className="fakeDetailsTableCol">{it.product}</div>
+                                                                                                    <div className="fakeDetailsTableCol">{it.quantity}</div>
+                                                                                                    <div className="fakeDetailsTableCol">{it.quantity*it.price}</div>
                                                                                                 </div>)}) : ''}
+                        {this.state.showDetails[o-1] ? <div className="fakeDetailsTableRow">
+                                                        <div className="fakeDetailsTableCol"></div>
+                                                        <div className="fakeDetailsTableCol"></div>
+                                                        <div className="fakeDetailsTableCol"></div>
+                                                        <div className="fakeDetailsTableCol"></div>
+                                                        <div className="fakeDetailsTableCol">{'total: '}{this.state.orders[o-1].amount}</div>
+                                                    </div> : ''}
                             </div>
                     )})
                 }
             </div>
-        </div>
         )}
 }
 

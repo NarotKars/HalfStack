@@ -256,26 +256,3 @@ CREATE TABLE Orders_Products(
 )
 
 GO
-
-select Orders_Products.Order_Id, Orders_Products.Quantity, Products.Name, Addresses.City, Addresses.Street, Addresses.Number, Orders.Status
-from Orders_Products
-join Products on Products.Barcode=Orders_Products.Product_code
-join Customers on Customers.User_Id=Orders_Products.Customer_Id
-join Addresses on Addresses.ID=Customers.Address_ID
-join Orders on Orders.Order_Id=Orders_Products.Order_Id
-	
-
-select * from Products
-select * from Orders_Products
-select * from Products_in_Branches
-insert into Orders_Products(Order_Id,Product_code,Quantity, Customer_Id)
-values(6,'5456364',10,1),
-		(6,'545475874',5,1),
-		(6,'5453454',5,1)
-
-
-		select * from Orders_Products
-
-delete from Orders_Products where Order_Id=6
-
-select * from Orders

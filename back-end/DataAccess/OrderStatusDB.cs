@@ -13,7 +13,7 @@ namespace dbSettings.DataAccess
 
         public OrderStatusDB()
         {
-            _connnection = new SqlConnection(_coneectionString);
+            _connnection = new SqlConnection(AppSettings.ConnectionString);
         }
         public OrderStatus Update(OrderStatus order)
         {

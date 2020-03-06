@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Customer from './customer/App';
-// import Manager from './manager/ManagerPage';
+import Manager from './Manager/ManagerPage';
 // import Delivery from './delivery/App.js';
 
 class App extends React.Component {
@@ -9,9 +9,9 @@ class App extends React.Component {
   {
     return (
       <div>
-        <Customer/>
-        {/* <Manager/>
-        <Delivery/> */}
+        {/*<Customer/>*/}
+         <Manager/>
+        {/*<Delivery/> */}
       </div>
     );
   }

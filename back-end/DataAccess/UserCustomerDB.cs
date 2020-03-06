@@ -5,17 +5,12 @@ namespace dbSettings.DataAccess
 {
     public class UserCustomerDB
     {
-        private const string _coneectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=Supermarket_DB; Security=True";
-
-
         private SqlConnection _connnection;
 
         public UserCustomerDB()
         {
-            _connnection = new SqlConnection(_coneectionString);
+            _connnection = new SqlConnection(AppSettings.ConnectionString);
         }
-
-
 
         public UserCustomer ReadById(int id)
         {
@@ -66,7 +61,7 @@ namespace dbSettings.DataAccess
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = _connnection;
-                    cmd.CommandText = string.Format("update Customers set Name='{0}' where Customers.User_Id='{1}'", user.Name,user.Id);
+                    cmd.CommandText = string.Format("update Customers set Name='{0}' where Customers.User_Id='{1}'", user.Name, user.Id);
 
                     cmd.ExecuteNonQuery();
 
@@ -81,34 +76,34 @@ namespace dbSettings.DataAccess
             {
                 _connnection.Close();
             }
-            try
-            {
-                _connnection.Open();
-
-                using (SqlCommand cmd = new SqlCommand())
-                {
-
-                    cmd.Connection = _connnection;
-                    cmd.CommandText = string.Format("if(select addresses.id from addresses where  addresses.city='{0}' and addresses.street='{1}' and addresses.number='{2}' ) is not null update customers set address_id = (select id from addresses where addresses.city = '{0}' and addresses.street = '{1}' and addresses.number = '{2}') where customers.user_id = '{3}' else begin insert into addresses(city, street, number) values('{0}', '{1}', '{2}') update customers set address_id = (select scope_identity() as id) where customers.user_id = '{3}' end", user.Address.City, user.Address.Street, user.Address.Number, user.Id);
-
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            catch
-            {
-
-                throw;
-            }
-            finally
-            {
-                _connnection.Close();
-            }
-
             return user;
         }
 
 
-       
+public Update updateAddress(Update user)
+{
+    try
+        {
+            _connnection.Open();
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = _connnection;
+                    cmd.CommandText = string.Format("if(select addresses.id from addresses where  addresses.city='{0}' and addresses.street='{1}' and addresses.number='{2}' ) is not null update customers set address_id = (select id from addresses where addresses.city = '{0}' and addresses.street = '{1}' and addresses.number = '{2}') where customers.user_id = '{3}' else begin insert into addresses(city, street, number) values('{0}', '{1}', '{2}') update customers set address_id = (select scope_identity() as id) where customers.user_id = '{3}' end", user.Address.City, user.Address.Street, user.Address.Number, user.Id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+
+                throw;
+            }
+            finally
+            {
+                _connnection.Close();
+            }
+            return user;
+}
 
     }
 }
+

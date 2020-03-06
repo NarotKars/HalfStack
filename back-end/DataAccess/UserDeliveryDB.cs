@@ -14,7 +14,7 @@ namespace dbSettings.DataAccess
 
         public UserDeliveryDB()
         {
-            _connnection = new SqlConnection(_coneectionString);
+            _connnection = new SqlConnection(AppSettings.ConnectionString);
         }
 
 

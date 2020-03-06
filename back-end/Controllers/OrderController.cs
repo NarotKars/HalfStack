@@ -3,13 +3,14 @@ using back_end.Models;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using dbSettings.DataAccess;
+using System;
 namespace back_end.Controllers
 {
     [ApiController]
     public class OrderController : ControllerBase
     {
         private OrderManager manager = new OrderManager();
-
+        //get all orders
         [HttpGet("/manager/orders")]
         public IEnumerable<Order> ManagerOrders()
         {
@@ -17,15 +18,7 @@ namespace back_end.Controllers
             List<Order> managers= orderManager.GetAllOrdersAsGenericList();
             return  managers;
         }
-
-         [HttpGet("manager/orders/{status}")]
-        public IEnumerable<Order> OrderListByStatus(int num)
-        {
-            OrderManager manager = new OrderManager();
-            List<Order> orders = manager.GetOrdersAsGenericList(num);
-            return orders;
-        }
-
+        //get orders by customer's id
         [HttpGet("/customer/orders/{id}")]
         public IEnumerable<Order> Orders(int id)
         {
@@ -33,12 +26,12 @@ namespace back_end.Controllers
             List<Order> orders= orderdb.GetOrdersAsGenericList(id);
             return  orders;
         }
-
+        //get order details by order id
         [HttpGet("/customer/orders/details/{id}")]
         public IEnumerable<OrderDetails> OrdersDetails(int id)
         {
             OrderDetailsdb orderdDetailsdb=new OrderDetailsdb();
-            List<OrderDetails> orderDetails= orderdDetailsdb.GetOrderDetailsAsGenericList(id);
+            List<OrderDetails> orderDetails= orderdDetailsdb.GetOrderDetailsOfOneCustomerAsGenericList(id);
             return  orderDetails;
         }
 
@@ -57,7 +50,6 @@ namespace back_end.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
         [HttpPut]
         [Route("api/Orders/Feedback")]
         public IActionResult PutFeedback(OrderFeedbackModel model)
@@ -74,6 +66,36 @@ namespace back_end.Controllers
             }
         }
 
-       
+        //reordering by order id
+        [HttpPost("/customer/reorder/{id}")]
+        public ActionResult PostOrder(Reorder order)
+        {
+            try
+            {
+                //When reordering
+                //1. A new transaction is created
+                Transactiondb transactiondb=new Transactiondb();
+                Transaction newTransaction =new Transaction();
+                newTransaction=transactiondb.CreateTransaction(order.amount);
+                //2. Based on newly created transaction a new order is created
+                Orderdb orderdb=new Orderdb();
+                orderdb.InsertOrder(order,newTransaction.transactionId);
+                orderdb.updateOrderAddress(order.Address, newTransaction.transactionId);
+                //3.The products of the new order is added
+                OrderDetailsdb orderDetailsdb=new OrderDetailsdb();
+                List<OrderDetails> orderDetails =new List<OrderDetails>();
+                orderDetails=orderDetailsdb.GetOrderDetailsAsGenericListByOrderId(order.orderId);
+                foreach (var item in orderDetails)
+                {
+                    orderDetailsdb.InsertProduct(item,newTransaction.transactionId);
+                }
+
+            }
+            catch
+            {
+                return BadRequest("something went wrong");
+            }
+            return Ok();
+        }
     }
 }

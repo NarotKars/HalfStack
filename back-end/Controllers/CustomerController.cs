@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using back_end.Models;
 using dbSettings.DataAccess;
+using System;
 
 namespace back_end.Controllers
 {
@@ -25,7 +26,6 @@ namespace back_end.Controllers
         {
             try
             {
-
                 var users = user.ReadById(id);
 
                 return Ok(users);
@@ -37,7 +37,7 @@ namespace back_end.Controllers
         }
 
 
-        [Route("updatee")]
+        [Route("updatee/{id}")]
         [HttpPut]
         public ActionResult UpDatee(Update us)
         {
@@ -46,7 +46,7 @@ namespace back_end.Controllers
                 if (ModelState.IsValid)
                 {
                     var users = user.Updatet(us);
-
+                    user.updateAddress(us);
                     if (users == null) return NotFound();
                     return Ok(users);
                 }
@@ -54,8 +54,6 @@ namespace back_end.Controllers
             catch
             {
                 return BadRequest();
-
-
             }
             return BadRequest(ModelState);
         }

@@ -1,4 +1,4 @@
-import React from './node_modules/react';
+import React from "react";
 let i=0;
     
 class OrdersList extends React.Component{
@@ -17,7 +17,7 @@ class OrdersList extends React.Component{
   seeDetails = (id) => {
     const that = this;
     that.state.showDetails=true;
-    fetch("https://localhost:44390/manager/order/details/6/")
+    fetch("https://localhost:5001/manager/order/details/6/")
         .then(function(response) {
             return response.json();
         })
@@ -42,14 +42,14 @@ class OrdersList extends React.Component{
       body: JSON.stringify(someData)
      }
      
-     fetch("https://localhost:44390/manager/order/update", putMethod)
+     fetch("https://localhost:5001/manager/order/update", putMethod)
      .then(response => response.json())
     }
 
   componentDidMount()
   {
     const that = this;
-    fetch("https://localhost:44390/manager/orders/1/")
+    fetch("https://localhost:5001/manager/orders/1/")
         .then(function(response) {
             return response.json();
         })

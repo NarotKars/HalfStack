@@ -6,7 +6,7 @@ using dbSettings.DataAccess;
 namespace back_end.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    //[Route("[controller]")]
     public class FeedbackController : ControllerBase
     {
         private readonly ILogger<FeedbackController> _logger;
@@ -16,7 +16,7 @@ namespace back_end.Controllers
             _logger = logger;
         }
 
-        [HttpPost]
+        [HttpPost("feedback/{id}")]
         public IActionResult PostFeed(Feedback feedback)
         {
 
@@ -34,6 +34,3 @@ namespace back_end.Controllers
 
     }
 }
-
-
-
