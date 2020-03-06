@@ -18,6 +18,15 @@ namespace back_end.Controllers
             List<Order> managers= orderManager.GetAllOrdersAsGenericList();
             return  managers;
         }
+
+        [HttpGet("manager/orders/{status}")]
+        public IEnumerable<Order> OrderListByStatus(string status)
+        {
+            OrderManager manager = new OrderManager();
+            List<Order> orders = manager.GetOrdersAsGenericList(status);
+            return orders;
+        }
+
         //get orders by customer's id
         [HttpGet("/customer/orders/{id}")]
         public IEnumerable<Order> Orders(int id)

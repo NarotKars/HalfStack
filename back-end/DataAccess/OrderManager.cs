@@ -12,14 +12,14 @@ namespace dbSettings.DataAccess
             connection = new SqlConnection(AppSettings.ConnectionString);
         }
 
-          public List<Order> GetOrdersAsGenericList(int num)
+           public List<Order> GetOrdersAsGenericList(string status)
         {
             List<Order> orders = new List<Order>();
-            string sql = "SELECT Order_Id, Customer_Id, Order_Date, City, Street, Number FROM Orders join Addresses on Orders.Address_ID=Addresses.ID WHERE  Status='new'";
+            string sql = "SELECT Order_Id, Customer_Id, Order_Date, City, Street, Number FROM Orders join Addresses on Orders.Address_ID=Addresses.ID WHERE  Status='{0}'";
 
             try
             {
-                using (SqlCommand command = new SqlCommand(string.Format(sql, num), connection))
+                using (SqlCommand command = new SqlCommand(string.Format(sql, status), connection))
                 {
                     connection.Open();
                     using (SqlDataReader dataReader = command.ExecuteReader())
@@ -49,6 +49,7 @@ namespace dbSettings.DataAccess
             }
             return orders;
         }
+        
         public string Get(int id)
         {
             string feedback = "";
