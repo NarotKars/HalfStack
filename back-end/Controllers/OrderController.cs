@@ -79,6 +79,7 @@ namespace back_end.Controllers
         public List<OrderProduct> Details(int id)
         {
             theAlgorithm item = new theAlgorithm();
+            int[,] a=item.algorithm(id);
             List<OrderProduct> orderDetails = item.GetAllProductsAsGenericList(id);
             return orderDetails;
         }

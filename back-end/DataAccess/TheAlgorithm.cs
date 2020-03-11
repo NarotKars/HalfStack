@@ -10,6 +10,7 @@ namespace dbSettings.DataAccess
     public class theAlgorithm
     {
         long ORDERID;
+        double minDistance=0;
         private const string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=Supermarket_DB;Integrated Security=True";
         private SqlConnection connection;
         public theAlgorithm()
@@ -102,7 +103,7 @@ namespace dbSettings.DataAccess
                 }
             }
             bool[] visited = { false, false, false, false };
-            
+            minDistance+=imin1;
             int nextBranch = customer_min_distance1-1;
 
            
@@ -126,11 +127,68 @@ namespace dbSettings.DataAccess
                     }
                 }
                 }
+                minDistance+=min;
                 }
             }
+            minDistance*=5;
+            minDistance=Convert.ToInt32(minDistance);
+            minDistance+=15;
+            int hours=0,minutes=0;
+            if(minDistance>=120)
+            {
+                hours=2;
+                minDistance-=120;
+            }
+            else if(minDistance>=60)
+            {
+                hours=1;
+                minDistance-=60;
+            }
+            minutes=Convert.ToInt32(minDistance);
+            DateTime confirm_later=new DateTime(2020, 3, 12, hours,minutes,0);
             
-             Console.WriteLine( deliveryWorkers(nextBranch+=1)[0]);
+            
+            Console.WriteLine(confirm_later);
+            int[] deliveryworkers=deliveryWorkers(nextBranch+1);
+            try
+            {
+                connection.Open();
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = string.Format("INSERT INTO Orders_DeliveryWorkers(Id1,Id2,Id3,Order_Id) values('{0}', '{1}', '{2}','{3}')", deliveryworkers[0], deliveryworkers[1], deliveryworkers[2], ORDERID);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
 
+
+
+            try
+            {
+                connection.Open();
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = string.Format("UPDATE Orders SET confirm_later='{0}' WHERE Order_Id='{1}'", confirm_later, ORDERID);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
 
             return branches;
         }

@@ -21,8 +21,8 @@ namespace back_end.Controllers
         [HttpGet("/customer/preferences/{id}")]
         public IEnumerable<Preference> Preferences(int id)
         {
-            theAlgorithm algo=new theAlgorithm();
-            int[,] a=algo.algorithm(11);
+            /*theAlgorithm algo=new theAlgorithm();
+            int[,] a=algo.algorithm(11);*/
             Preferencedb preferencedb=new Preferencedb();
             List<Preference> preferences= preferencedb.GetPreferencesAsGenericList(id);
             return preferences;
