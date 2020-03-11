@@ -17,7 +17,7 @@ class Confirm extends React.Component{
   seeDetails = (id) => {
     const that = this;
     that.state.showDetails=true;
-    fetch("https://localhost:44390/manager/order/details/6/")
+    fetch("https://localhost:5001/manager/order/details/6/")
         .then(function(response) {
             return response.json();
         })
@@ -42,7 +42,7 @@ class Confirm extends React.Component{
       body: JSON.stringify(someData)
      }
      
-     fetch("https://localhost:44390/manager/order/update", putMethod)
+     fetch("https://localhost:5001/manager/order/update", putMethod)
      .then(response => response.json())
   }
 
@@ -66,7 +66,7 @@ class Confirm extends React.Component{
   {
     console.log(this.props.status,"confirmed");
     const that = this;
-    fetch("https://localhost:44390/manager/orders/"+this.props.status )
+    fetch("https://localhost:5001/manager/orders/"+this.props.status )
         .then(function(response) {
             return response.json();
         })

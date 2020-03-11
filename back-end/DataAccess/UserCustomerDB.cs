@@ -23,18 +23,16 @@ namespace dbSettings.DataAccess
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = _connnection;
-                    cmd.CommandText = string.Format("select  Customers.Name,Customers.Phone_Number,Users.Email,Addresses.City,Addresses.Street,Addresses.Number from Customers join Addresses on Customers.Address_ID=Addresses.ID  join Users on Customers.User_ID=Users.Id where Customers.User_ID ='{0}'", id);
+                    cmd.CommandText = string.Format("select Customers.Phone_Number,ISNULL(Customers.Name,'unknown') as Name,ISNULL(Users.Email,'unknown') as Email,Addresses.City,Addresses.Street,Addresses.Number from Customers left join Addresses on Customers.Address_ID=Addresses.ID  left join Users on Customers.User_ID=Users.Id where Customers.User_ID ='{0}'", id);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-
-                            item.Name = reader.GetString(reader.GetOrdinal("Name"));
                             item.Phone_Number = reader.GetString(reader.GetOrdinal("Phone_Number"));
+                            item.Name = reader.GetString(reader.GetOrdinal("Name"));
                             item.Email = reader.GetString(reader.GetOrdinal("Email"));
                             item.Address = reader.GetString(reader.GetOrdinal("City")) + reader.GetString(reader.GetOrdinal("Street")) + reader.GetString(reader.GetOrdinal("Number"));
-
                         }
                     }
                 }

@@ -8,7 +8,7 @@ class PersonalInfo extends React.Component{
     componentDidMount()
     {
         const that = this;
-        fetch("https://localhost:5001/api/DeliveryPerson/7")
+        fetch("https://localhost:5001/api/DeliveryPerson/2")
         .then(function(response) {
             return response.json();
         })
@@ -19,13 +19,13 @@ class PersonalInfo extends React.Component{
     }
     render() {
         return(
-            <div className="listWrapper">
-                <div className="list">
+            <div className="personalInfoWrapper">
+                <div className="personalInfoList">
                     <li>Name:</li>
                     <li>Email:</li>
                     <li>Address:</li>
                 </div>
-                <div className="list">
+                <div className="personalInfoList">
                     <li>{this.state.personalInfo.name}</li>
                     <li>{this.state.personalInfo.email}</li>
                     <li>{this.state.personalInfo.address}</li>

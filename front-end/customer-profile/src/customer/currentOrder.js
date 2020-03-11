@@ -25,7 +25,7 @@ class CurrentOrder extends React.Component {
             return response.json();
         })
         .then(function(jsonStr) {
-            var r=jsonStr.filter(item => item.status==='in time')
+            var r=jsonStr.filter(item => item.status==='confirmed')
             for(var j=0; j<r.length;j++)
                 showdetails.push(false);
             that.setState({orders: r,

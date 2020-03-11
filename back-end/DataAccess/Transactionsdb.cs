@@ -9,7 +9,7 @@ namespace dbSettings.DataAccess
 {
     public class Transactiondb
     {
-        public Transaction CreateTransaction(decimal total)
+        public Transaction CreateTransaction(decimal total,DateTime orderDate)
         {
             string sql = "CreateTransaction";
             Transaction newTransaction=new Transaction();
@@ -22,15 +22,21 @@ namespace dbSettings.DataAccess
                     {
                         command.CommandType = CommandType.StoredProcedure;
                         connection.Open();
-                        SqlParameter status=command.CreateParameter();
-                        status.ParameterName="@Status";
-                        status.Value="new";
-                        command.Parameters.Add(status);
 
                         SqlParameter amount=command.CreateParameter();
                         amount.ParameterName="@Amount";
                         amount.Value=total;
                         command.Parameters.Add(amount);
+
+                        SqlParameter date=command.CreateParameter();
+                        date.ParameterName="@Date";
+                        date.Value=orderDate;
+                        command.Parameters.Add(date);
+
+                        SqlParameter status=command.CreateParameter();
+                        status.ParameterName="@Status";
+                        status.Value="new";
+                        command.Parameters.Add(status);
 
                         SqlParameter newtransactionId= command.CreateParameter();
                         newtransactionId.ParameterName="@id";
@@ -38,6 +44,8 @@ namespace dbSettings.DataAccess
                         newtransactionId.DbType= System.Data.DbType.Int64;
                         command.Parameters.Add(newtransactionId);
                         command.ExecuteNonQuery();
+                        newTransaction.amount=total;
+                        newTransaction.orderDate=orderDate;
                         if(newtransactionId is null)
                             newTransaction.transactionId=-1;
                         else

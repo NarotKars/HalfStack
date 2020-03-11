@@ -1,7 +1,7 @@
 import React from 'react';
 let i=0;
     
-class OrdersList extends React.Component{
+class NotConfirm extends React.Component{
   constructor(props) {
     super(props);
     this.state={
@@ -64,7 +64,8 @@ class OrdersList extends React.Component{
 
   componentDidMount()
   {
-    console.log(this.state.status,"hggf");
+
+    console.log(this.state.status,"confirm");
     const that = this;
     fetch("https://localhost:5001/manager/orders/" + this.state.status)
         .then(function(response) {
@@ -93,10 +94,9 @@ class OrdersList extends React.Component{
             <tbody>
             {
                 this.state.orders.map(item => {
-                  i++;
                         return (
                             <tr key={item.orderId} >
-                             <td>{}</td>
+                             <td>{i++}</td>
                              <td>{item.orderDate}</td>
                              <td>{item.address}</td>
                              <td>{item.status}</td>
@@ -122,4 +122,4 @@ class OrdersList extends React.Component{
   
 }
 
-export default OrdersList;
+export default NotConfirm;

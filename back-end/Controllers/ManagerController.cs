@@ -9,13 +9,13 @@ using back_end.Models;
 
 namespace back_end.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
     [ApiController]
     public class ManagerController : ControllerBase
     {
         UserManagerDB user = new UserManagerDB();
 
-        [Route("getbyid/{id}")]
+        [Route("manager/{id}")]
         [HttpGet]
         public ActionResult GetById(int id)
         {

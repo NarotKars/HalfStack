@@ -15,17 +15,14 @@ class Menu extends React.Component{
             {id:2, clicked:false},
             {id:3, clicked:false}]
         changed[id-1].clicked=true;
-        this.setState({
-            buttons:[...changed]
-        })
+        this.setState({buttons:[...changed]});
         this.props.handleStateChange(id);
     }
     render(){
         return(
             <div className="menu">
                 <button className={this.state.buttons[0].clicked ? "menuButtonChanged" : "menuButton"} onClick={()=>this.changeTheCategory(this.state.buttons[0].id)}>Personal Infromation</button>
-                <button className={this.state.buttons[1].clicked ? "menuButtonChanged" : "menuButton"} onClick={()=>this.changeTheCategory(this.state.buttons[1].id)}>To Be Accepted</button>
-                <button className={this.state.buttons[2].clicked ? "menuButtonChanged" : "menuButton"} onClick={()=>this.changeTheCategory(this.state.buttons[2].id)}>Accepted</button>
+                <button className={this.state.buttons[1].clicked ? "menuButtonChanged" : "menuButton"} onClick={()=>this.changeTheCategory(this.state.buttons[1].id)}>Your Orders</button>
             </div>
         )
     }

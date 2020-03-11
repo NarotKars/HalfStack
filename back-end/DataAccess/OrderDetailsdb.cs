@@ -12,7 +12,7 @@ namespace dbSettings.DataAccess
         public List<OrderDetails> GetOrderDetailsOfOneCustomerAsGenericList(int id)
         {
             List<OrderDetails> orders = new List<OrderDetails>();
-            string sql = "select Transaction_Products.ProductsCode, Transaction_Products.[Count], Orders.Customer_Id, Products.Name, Products.Selling_Price, Orders.Order_Id, Products.Category_Name from Transaction_Products join Orders on Transaction_Products.TransactionID=Orders.Order_Id join Products on Products.Barcode=Transaction_Products.ProductsCode where Orders.Customer_Id='{0}'";
+            string sql = "select Products.Barcode,Orders.Order_Id,Quantity,Products.Name,Products.Category_Name,Products.Selling_Price,Orders.Customer_Id from Orders_Products join Products on Orders_Products.Product_code=Products.Barcode join Orders on Orders.Order_Id=Orders_Products.Order_Id where Orders.Customer_Id='{0}'";
             StringBuilder errorMessages = new StringBuilder();
             try
             {
@@ -31,9 +31,9 @@ namespace dbSettings.DataAccess
                                     customerId = dataReader.GetInt32(dataReader.GetOrdinal("Customer_Id")),
                                     product = dataReader.GetString(dataReader.GetOrdinal("Name")),
                                     price=dataReader.GetDecimal(dataReader.GetOrdinal("Selling_Price")),
-                                    quantity = dataReader.GetInt32(dataReader.GetOrdinal("Count")),
+                                    quantity = dataReader.GetInt32(dataReader.GetOrdinal("Quantity")),
                                     categoryName=dataReader.GetString(dataReader.GetOrdinal("Category_Name")),
-                                    barcode=dataReader.GetString(dataReader.GetOrdinal("ProductsCode")),
+                                    barcode=dataReader.GetString(dataReader.GetOrdinal("Barcode")),
                                 });
                             }
                         }
@@ -60,7 +60,7 @@ namespace dbSettings.DataAccess
         public List<OrderDetails> GetOrderDetailsAsGenericListByOrderId(long id)
         {
             List<OrderDetails> orders = new List<OrderDetails>();
-            string sql = "select Transaction_Products.ProductsCode, Transaction_Products.[Count], Transaction_Products.TransactionID from Transaction_Products where Transaction_Products.TransactionID='{0}'";
+            string sql = "select Order_Id,Quantity,Product_code from Orders_Products where Order_Id='{0}'";
             StringBuilder errorMessages = new StringBuilder();
             try
             {
@@ -75,9 +75,9 @@ namespace dbSettings.DataAccess
                             {
                                 orders.Add(new OrderDetails
                                 {
-                                    orderId= dataReader.GetInt64(dataReader.GetOrdinal("TransactionId")),
-                                    quantity = dataReader.GetInt32(dataReader.GetOrdinal("Count")),
-                                    barcode=dataReader.GetString(dataReader.GetOrdinal("ProductsCode")),
+                                    orderId= dataReader.GetInt64(dataReader.GetOrdinal("Order_Id")),
+                                    quantity = dataReader.GetInt32(dataReader.GetOrdinal("Quantity")),
+                                    barcode=dataReader.GetString(dataReader.GetOrdinal("Product_code")),
                                 });
                             }
                         }
@@ -102,7 +102,7 @@ namespace dbSettings.DataAccess
 
         public void InsertProduct(OrderDetails order, long id)
         {
-            string sql = "INSERT INTO Transaction_Products(TransactionID, ProductsCode, [Count])";
+            string sql = "insert into Orders_Products(Order_Id, Product_code, Quantity)";
             sql += $" VALUES('{id}' , '{order.barcode}', '{order.quantity}')";
             StringBuilder errorMessages = new StringBuilder();
             using (SqlConnection connection = new SqlConnection(AppSettings.ConnectionString))

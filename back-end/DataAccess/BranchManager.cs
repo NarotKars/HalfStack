@@ -1,4 +1,4 @@
-using System.Data.SqlClient;
+/*using System.Data.SqlClient;
 using back_end.Models;
 using System.Collections.Generic;
 namespace dbSettings.DataAccess
@@ -86,3 +86,4 @@ namespace dbSettings.DataAccess
         }
     }
 }
+*/

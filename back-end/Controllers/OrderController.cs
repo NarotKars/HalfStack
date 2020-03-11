@@ -75,6 +75,13 @@ namespace back_end.Controllers
             }
         }
 
+        [HttpGet("manager/order/details/{id}")]
+        public List<OrderProduct> Details(int id)
+        {
+            theAlgorithm item = new theAlgorithm();
+            List<OrderProduct> orderDetails = item.GetAllProductsAsGenericList(id);
+            return orderDetails;
+        }
         //reordering by order id
         [HttpPost("/customer/reorder/{id}")]
         public ActionResult PostOrder(Reorder order)
@@ -85,7 +92,7 @@ namespace back_end.Controllers
                 //1. A new transaction is created
                 Transactiondb transactiondb=new Transactiondb();
                 Transaction newTransaction =new Transaction();
-                newTransaction=transactiondb.CreateTransaction(order.amount);
+                newTransaction=transactiondb.CreateTransaction(order.amount,order.orderDate);
                 //2. Based on newly created transaction a new order is created
                 Orderdb orderdb=new Orderdb();
                 orderdb.InsertOrder(order,newTransaction.transactionId);
@@ -94,6 +101,7 @@ namespace back_end.Controllers
                 OrderDetailsdb orderDetailsdb=new OrderDetailsdb();
                 List<OrderDetails> orderDetails =new List<OrderDetails>();
                 orderDetails=orderDetailsdb.GetOrderDetailsAsGenericListByOrderId(order.orderId);
+                Console.WriteLine(orderDetails[0]);
                 foreach (var item in orderDetails)
                 {
                     orderDetailsdb.InsertProduct(item,newTransaction.transactionId);

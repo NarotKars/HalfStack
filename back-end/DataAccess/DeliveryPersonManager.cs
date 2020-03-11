@@ -28,7 +28,7 @@ namespace dbSettings.DataAccess
                         while (reader.Read())
                         {
                             item.Name = reader.GetString(reader.GetOrdinal("Name"));
-                            item.Email = reader.GetString(reader.GetOrdinal("Name"));
+                            item.Email = reader.GetString(reader.GetOrdinal("Email"));
                             item.Address = reader.GetString(reader.GetOrdinal("Number")) +
                                            reader.GetString(reader.GetOrdinal("Street")) +
                                             reader.GetString(reader.GetOrdinal("City"));

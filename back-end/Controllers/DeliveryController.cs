@@ -53,6 +53,12 @@ namespace back_end.Controllers
             return BadRequest(ModelState);
         }
 
-
+        [HttpGet("/delivery/tobeaccepted/{id}")]
+        public IEnumerable<Order> ToBeAccepted(int id)
+        {
+            UserDeliveryDB deliveryWorker=new UserDeliveryDB();
+            List<Order> tobeaccepted= deliveryWorker.GetToBeAcceptedOrders(id);
+            return tobeaccepted;
+        }
     }
 }

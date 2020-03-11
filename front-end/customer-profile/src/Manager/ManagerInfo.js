@@ -11,7 +11,7 @@ class ManagerInfo extends React.Component {
   }
   componentDidMount() {
     const that = this;
-        fetch("https://localhost:5001/manager/getbyid/7")
+        fetch("https://localhost:5001/manager/7")
         .then(function(response) {
             return response.json();
         })

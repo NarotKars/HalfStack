@@ -7,5 +7,6 @@ namespace back_end.Models
         public string status {get; set;}
         public string product {get; set;}
         public int quantity {get; set;}
+        public string barcode {get; set;}
     }
 }

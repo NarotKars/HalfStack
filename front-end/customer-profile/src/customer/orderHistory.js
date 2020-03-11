@@ -32,7 +32,7 @@ class OrderHistory extends React.Component {
             return response.json();
         })
         .then(function(jsonStr) {
-            var r=jsonStr.filter(item => item.status!=='in time' && item.status!=='new')
+            var r=jsonStr.filter(item => item.status!=='confirmed' && item.status!=='new')
             for(var j=0; j<r.length;j++)
             {
                 showdetails.push(false);

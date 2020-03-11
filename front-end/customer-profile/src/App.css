@@ -298,3 +298,96 @@ font-size: 2vw;
   width: 70%;
   padding: 1%;
 }
+
+
+
+.personalInfoWrapper{
+  display: table-row;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #07afdc;
+  position: relative;
+  width: 35%;
+  left: 30.5%;
+  margin-top: 2.5%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.personalInfoList
+{
+  padding-left: 2%;
+  text-align: left;
+  display: table-cell;
+  color:white;
+}
+
+li{
+  list-style-type:none;
+}
+
+.newOrder
+{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2%;
+  width: 50%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  background-color: #2edca1;
+  color:white;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.customerInfoWrapper
+{
+  display: table-row;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.col
+{
+  padding-left: 2%;
+  text-align: left;
+  display: table-cell;
+  color:white;
+}
+
+
+.customerInfoWrapper{
+  margin-top: 2%;
+  display: table-row;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2%;
+}
+
+.orderProductsWrapper
+{
+  width: 70%;
+  margin-top: 3%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color:#07afdc;
+  border-radius: 20px;
+}
+
+.CPIH
+{
+  color: white;
+  font-size: 20px;
+  font-family: Century Gothic;
+}
+
+.preferenceList
+{
+  list-style-type:disc;
+  text-align: left;
+  color:white;
+}

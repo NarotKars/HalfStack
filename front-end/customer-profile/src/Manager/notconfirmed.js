@@ -17,7 +17,7 @@ class NotConfirm extends React.Component{
   seeDetails = (id) => {
     const that = this;
     that.state.showDetails=true;
-    fetch("https://localhost:44390/manager/order/details/6/")
+    fetch("https://localhost:5001/manager/order/details/6/")
         .then(function(response) {
             return response.json();
         })
@@ -42,7 +42,7 @@ class NotConfirm extends React.Component{
       body: JSON.stringify(someData)
      }
      
-     fetch("https://localhost:44390/manager/order/update", putMethod)
+     fetch("https://localhost:5001/manager/order/update", putMethod)
      .then(response => response.json())
   }
 
@@ -67,7 +67,7 @@ class NotConfirm extends React.Component{
 
     console.log(this.state.status,"confirm");
     const that = this;
-    fetch("https://localhost:44390/manager/orders/" + this.state.status)
+    fetch("https://localhost:5001/manager/orders/" + this.state.status)
         .then(function(response) {
             return response.json();
         })

@@ -1,6 +1,9 @@
-
-﻿using back_end.Models;
+using back_end.Models;
 using System.Data.SqlClient;
+using System.Text;
+using System;
+using System.Collections.Generic;
+using System.Data;
 
 namespace dbSettings.DataAccess
 
@@ -29,7 +32,7 @@ namespace dbSettings.DataAccess
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = _connnection;
-                    cmd.CommandText = string.Format("select Workers.Name,Users.Username, Users.Email, Addresses.City, Addresses.Street, Addresses.Number  from Delivery_Person join Workers on Delivery_Person.Delivery_Id = Workers.Worker_Id join Users on Workers.Worker_Id = Users.Id join Addresses on Delivery_Person.Address_ID = Addresses.ID where Delivery_Person.Delivery_Id = {0}", id);
+                    cmd.CommandText = string.Format("select Workers.Name, Users.Email, Addresses.City, Addresses.Street, Addresses.Number  from Delivery_Person join Workers on Delivery_Person.Delivery_Id = Workers.Worker_Id join Users on Workers.Worker_Id = Users.Id join Addresses on Delivery_Person.Address_ID = Addresses.ID where Delivery_Person.Delivery_Id = {0}", id);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -106,7 +109,46 @@ namespace dbSettings.DataAccess
             return user;
         }
 
-
+        public List<Order> GetToBeAcceptedOrders(int id)
+        {
+            List<Order> orders=new List<Order>();
+            string sql = "select Orders.Order_Id, Customer_Id from Orders_DeliveryWorkers join Orders on Orders_DeliveryWorkers.Order_Id=Orders.Order_Id where  (Id1='{0}' or Id2='{0}' or Id3='{0}') and Accepted_Id is null";
+            StringBuilder errorMessages = new StringBuilder();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(AppSettings.ConnectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(string.Format(sql,id), connection))
+                    {
+                        connection.Open();
+                        using (SqlDataReader dataReader = command.ExecuteReader(CommandBehavior.CloseConnection))
+                        {
+                            while (dataReader.Read())
+                            {
+                                orders.Add(new Order
+                                {
+                                    orderId= dataReader.GetInt64(dataReader.GetOrdinal("Order_Id")),
+                                    customerId=dataReader.GetInt32(dataReader.GetOrdinal("Customer_Id"))
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch(SqlException ex)
+                    {
+                        for (int i = 0; i < ex.Errors.Count; i++)
+                        {
+                             errorMessages.Append("Index #" + i + "\n" +
+                            "Message: " + ex.Errors[i].Message + "\n" +
+                            "LineNumber: " + ex.Errors[i].LineNumber + "\n" +
+                            "Source: " + ex.Errors[i].Source + "\n" +
+                            "Procedure: " + ex.Errors[i].Procedure + "\n");
+                        }
+                        Console.WriteLine(errorMessages.ToString());
+                    }
+            return orders;
+        }
 
     }
 }
