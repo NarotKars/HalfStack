@@ -150,5 +150,76 @@ namespace dbSettings.DataAccess
             return orders;
         }
 
+
+        public void deliveryIsAccepted(OrderDelivery order)
+        {   
+            string sql="UPDATE Orders_DeliveryWorkers " +
+                       "SET Accepted_Id = @Accepted_Id "+
+                       "Where Order_Id=@Order_Id";
+            StringBuilder errorMessages = new StringBuilder();
+            using (SqlConnection connection = new SqlConnection(AppSettings.ConnectionString))
+            {
+                using (SqlCommand command= new SqlCommand(sql, connection))
+                {
+                    try
+                    {
+                        command.CommandType = CommandType.Text;
+                        connection.Open();
+                        command.Parameters.Add("@Accepted_Id", SqlDbType.VarChar).Value=order.deliveryId; 
+                        command.Parameters.Add("@Order_Id",SqlDbType.Int).Value=order.orderId;
+                        command.ExecuteNonQuery();
+                    }
+                    catch(SqlException ex)
+                    {
+                        for (int i = 0; i < ex.Errors.Count; i++)
+                        {
+                             errorMessages.Append("Index #" + i + "\n" +
+                            "Message: " + ex.Errors[i].Message + "\n" +
+                            "LineNumber: " + ex.Errors[i].LineNumber + "\n" +
+                            "Source: " + ex.Errors[i].Source + "\n" +
+                            "Procedure: " + ex.Errors[i].Procedure + "\n");
+                        }
+                        Console.WriteLine(errorMessages.ToString());
+                    }
+                }
+            }
+        }
+
+
+        public void deliveryStatus(DeliveryStatus d)
+        {   
+            string sql="UPDATE Delivery_Person " +
+                       "SET Status=@Status "+
+                       "Where Delivery_Id=@Delivery_Id";
+            StringBuilder errorMessages = new StringBuilder();
+            using (SqlConnection connection = new SqlConnection(AppSettings.ConnectionString))
+            {
+                using (SqlCommand command= new SqlCommand(sql, connection))
+                {
+                    try
+                    {
+                        command.CommandType = CommandType.Text;
+                        connection.Open();
+                        command.Parameters.Add("@Delivery_Id", SqlDbType.Int).Value=d.deliveryId; 
+                        command.Parameters.Add("@Status",SqlDbType.VarChar).Value=d.status;
+                        command.ExecuteNonQuery();
+                    }
+                    catch(SqlException ex)
+                    {
+                        for (int i = 0; i < ex.Errors.Count; i++)
+                        {
+                             errorMessages.Append("Index #" + i + "\n" +
+                            "Message: " + ex.Errors[i].Message + "\n" +
+                            "LineNumber: " + ex.Errors[i].LineNumber + "\n" +
+                            "Source: " + ex.Errors[i].Source + "\n" +
+                            "Procedure: " + ex.Errors[i].Procedure + "\n");
+                        }
+                        Console.WriteLine(errorMessages.ToString());
+                    }
+                }
+            }
+        }
+        
+
     }
 }

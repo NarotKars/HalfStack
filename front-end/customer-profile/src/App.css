@@ -389,5 +389,65 @@ li{
 {
   list-style-type:disc;
   text-align: left;
-  color:white;
+}
+
+
+.fakeTableWrapperr
+{
+  margin:auto;
+  display: table;         
+  width: 100%;
+}
+.fakeTableRoww
+{
+  background-color: white;
+  display: table-row;
+  height: 3vw;
+  
+}
+.fakeTableColl{
+  
+  float: left;
+  display: table-column;
+  width: 33%; 
+  padding-top: 0.8vw;
+  font-size: 2.2vh;
+}
+
+.fakeTableHeaderr
+{
+  display: table-row;
+  background-color: #07afdc;
+  color: white;
+  height: 3vw;
+  margin:auto;
+}
+
+.customerInfoWrapperr
+{
+  display: table-row;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+.col2
+{
+  padding-left: 2%;
+  text-align: left;
+  display: table-cell;
+}
+
+.tableWrapperr
+{
+margin-top: 1%;
+  display: table;         
+  width: 90%;
+  margin-left: 5%;
 }

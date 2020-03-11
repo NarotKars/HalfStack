@@ -10,4 +10,10 @@ namespace back_end.Models
         public decimal price {get;set;}
         public string barcode {get;set;}
     }
+
+    public class OrderDelivery
+    {
+        public long orderId{get; set;}
+        public int deliveryId{get; set;}
+    }
 }

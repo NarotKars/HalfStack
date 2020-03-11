@@ -44,6 +44,15 @@ namespace back_end.Controllers
             return  orderDetails;
         }
 
+        //get order details with path by order id
+        [HttpGet("/customer/orders/details/path/{id}")]
+        public IEnumerable<BranchesAndProducts> GetOrderDetailsWithPath(int id)
+        {
+            OrderDetailsdb orderdDetailsdb=new OrderDetailsdb();
+            List<BranchesAndProducts> orderDetails= orderdDetailsdb.GetOrderDetailsWithPathAsGenericList(id);
+            return  orderDetails;
+        }
+
         [HttpGet]
         [Route("api/Orders/Feedback/{id}")]
         public IActionResult GetFeedback(int id)
@@ -102,7 +111,6 @@ namespace back_end.Controllers
                 OrderDetailsdb orderDetailsdb=new OrderDetailsdb();
                 List<OrderDetails> orderDetails =new List<OrderDetails>();
                 orderDetails=orderDetailsdb.GetOrderDetailsAsGenericListByOrderId(order.orderId);
-                Console.WriteLine(orderDetails[0]);
                 foreach (var item in orderDetails)
                 {
                     orderDetailsdb.InsertProduct(item,newTransaction.transactionId);

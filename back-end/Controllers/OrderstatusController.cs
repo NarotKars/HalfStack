@@ -11,7 +11,7 @@ namespace back_end.Controllers
     public class OrderstatusController : ControllerBase
     {
         OrderStatusDB order = new OrderStatusDB();
-        [Route("update")]
+        [Route("update/{id}")]
         [HttpPut]
         public ActionResult Updatee(OrderStatus ord)
         {

@@ -60,5 +60,39 @@ namespace back_end.Controllers
             List<Order> tobeaccepted= deliveryWorker.GetToBeAcceptedOrders(id);
             return tobeaccepted;
         }
+
+        [HttpPut("/deliveryworker/accept/{id}")]
+
+        public ActionResult PutWorkerId(OrderDelivery order)
+        {
+            try
+            {
+                UserDeliveryDB orderdelivery = new UserDeliveryDB();
+                orderdelivery.deliveryIsAccepted(order);
+            }
+            catch
+            {
+                return BadRequest("something went wrong");
+            }
+            return Ok();
+        }
+
+
+
+        [HttpPut("/deliveryworker/status/{id}")]
+
+        public ActionResult PutDeliveryWorkerStatus(DeliveryStatus order)
+        {
+            try
+            {
+                UserDeliveryDB orderdelivery = new UserDeliveryDB();
+                orderdelivery.deliveryStatus(order);
+            }
+            catch
+            {
+                return BadRequest("something went wrong");
+            }
+            return Ok();
+        }
     }
 }
