@@ -26,7 +26,7 @@ namespace dbSettings.DataAccess
         List<int> path=new List<int>();
         List<BranchProducts> bb = new List<BranchProducts>();
         List<OrderProduct> orders = new List<OrderProduct>();
-
+        DateTime confirm_later=new DateTime();
         List<BranchProducts> currentbranchproducts = new List<BranchProducts>();
         public int[,] algorithm(long id)
         {
@@ -145,7 +145,7 @@ namespace dbSettings.DataAccess
                 minDistance-=60;
             }
             minutes=Convert.ToInt32(minDistance);
-            DateTime confirm_later=new DateTime(2020, 3, 12, hours,minutes,0);
+           confirm_later=new DateTime(2020, 3, 12, hours,minutes,0);
             
             
             Console.WriteLine(confirm_later);
@@ -240,7 +240,7 @@ namespace dbSettings.DataAccess
         public List<OrderProduct> GetAllProductsAsGenericList(long id)
         {
 
-            string sql = "select Products.Barcode, Orders_Products.Order_Id, Orders_Products.Quantity, Products.Name, Addresses.City, Addresses.Street, Addresses.Number, Orders.Status from Orders_Products join Products on Products.Barcode=Orders_Products.Product_code join Orders on Orders.Order_Id=Orders_Products.Order_Id join Customers on Customers.User_Id=Orders.Customer_Id join Addresses on Addresses.ID=Customers.Address_ID  where Orders_Products.Order_Id='{0}'";
+            string sql = "select  Planned_Delivery_Receive_Date, Phone_Number, ISNULL(Customers.Name,' ') as Customer,Products.Barcode,Products.Cost_Price, Orders_Products.Order_Id, Orders_Products.Quantity, Products.Name, Addresses.City, Addresses.Street, Addresses.Number, Orders.Status from Orders_Products join Products on Products.Barcode=Orders_Products.Product_code join Orders on Orders.Order_Id=Orders_Products.Order_Id join Customers on Customers.User_Id=Orders.Customer_Id join Addresses on Addresses.ID=Orders.Address_ID  where Orders_Products.Order_Id='{0}'";
             StringBuilder errorMessages = new StringBuilder();
             try
             {
@@ -254,13 +254,18 @@ namespace dbSettings.DataAccess
                             orders.Add(new OrderProduct
                             {
                                 orderId = dataReader.GetInt64(dataReader.GetOrdinal("Order_Id")),
+                                customer=dataReader.GetString(dataReader.GetOrdinal("Customer")),
+                                phonenumber=dataReader.GetString(dataReader.GetOrdinal("Phone_Number")),
+                                price=dataReader.GetDecimal(dataReader.GetOrdinal("Cost_Price")),
                                 status = dataReader.GetString(dataReader.GetOrdinal("Status")),
                                 address = dataReader.GetString(dataReader.GetOrdinal("City")) +
                                           dataReader.GetString(dataReader.GetOrdinal("Street")) +
                                           dataReader.GetString(dataReader.GetOrdinal("Number")),
                                 product = dataReader.GetString(dataReader.GetOrdinal("Name")),
                                 quantity = dataReader.GetInt32(dataReader.GetOrdinal("Quantity")),
-                                barcode=dataReader.GetString(dataReader.GetOrdinal("Barcode"))
+                                barcode=dataReader.GetString(dataReader.GetOrdinal("Barcode")),
+                                time=confirm_later,
+                                deliverydate=dataReader.GetDateTime(dataReader.GetOrdinal("Planned_Delivery_Receive_Date"))
                             });
                         }
                     }

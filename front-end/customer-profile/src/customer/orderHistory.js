@@ -231,7 +231,7 @@ seeDetails = (id) => {
                          <div className="fakeTableCol"><button onClick={() => this.seeDetails(item.orderId)} className="seeDetailsBtn">hide details</button></div>:
                          <div className="fakeTableCol"><button onClick={() => this.seeDetails(item.orderId)} className="seeDetailsBtn">see details</button></div>}
                         </div>
-                    {this.state.showDetails[m-1] ? <div className="fakeDetailTableHeader">
+                        {this.state.showDetails[m-1] ? <div className="fakeDetailTableHeader">
                                                         <div className="fakeTableCol"></div>
                                                         <div className="fakeTableCol">Category Name</div>
                                                         <div className="fakeTableCol">Product Name</div>

@@ -26,11 +26,11 @@ class Manager extends React.Component{
   render(){
     return (
       <div className='App'>
-        <ManagerInfo/>
+        <ManagerInfo id={12}/>
         <Status handleStateChange={this.handleStateChange} />
         
         {this.state.num===2?<Confirm status={'confirmed'}/> : this.state.num===3?<NotConfirm status={'not confirmed'}/>:
-           <OrdersList status={ 'new'}/>}
+           <OrdersList status={'new'}/>}
       </div>
     );
   }

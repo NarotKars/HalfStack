@@ -23,7 +23,6 @@ namespace back_end.Controllers
             {
 
                 var users = user.ReadById(id);
-
                 return Ok(users);
             }
             catch

@@ -31,8 +31,8 @@ class Status extends React.Component{
               <button className={this.state.buttons[0].clicked ? "menuButtonChanged" : "menuButton"} onClick={()=>this.changeTheCategory(this.state.buttons[0].id)}>New</button>
               <button className={this.state.buttons[1].clicked ? "menuButtonChanged" : "menuButton"} onClick={()=>this.changeTheCategory(this.state.buttons[1].id)}>Confirmed</button>
                <button className={this.state.buttons[2].clicked ? "menuButtonChanged" : "menuButton"} onClick={()=>this.changeTheCategory(this.state.buttons[2].id)}>Not Confirmed</button>
-              {/*<button className={this.state.buttons[3].clicked ? "menuButtonChanged" : "menuButton"} onClick={()=>this.changeTheCategory(this.state.buttons[3].id)}>Rejected</button>
-              <button className={this.state.buttons[4].clicked ? "menuButtonChanged" : "menuButton"} onClick={()=>this.changeTheCategory(this.state.buttons[4].id)}>Completed</button> */}
+              <button className={this.state.buttons[3].clicked ? "menuButtonChanged" : "menuButton"} onClick={()=>this.changeTheCategory(this.state.buttons[3].id)}>Later</button>
+              {/* <button className={this.state.buttons[4].clicked ? "menuButtonChanged" : "menuButton"} onClick={()=>this.changeTheCategory(this.state.buttons[4].id)}>Completed</button> */} 
           </div>
       )
   }

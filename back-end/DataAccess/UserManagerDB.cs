@@ -1,5 +1,6 @@
 ﻿using back_end.Models;
 using System.Data.SqlClient;
+using System;
 
 namespace dbSettings.DataAccess
 {
@@ -9,6 +10,7 @@ namespace dbSettings.DataAccess
 
         public UserManagerDB()
         {
+          
             _connnection = new SqlConnection(AppSettings.ConnectionString);
         }
 
@@ -24,8 +26,7 @@ namespace dbSettings.DataAccess
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = _connnection;
-                    cmd.CommandText = string.Format("select Users.Id, Workers.Name,Users.Email from Workers join Users on Workers.Worker_Id=Users.Id where Workers.Worker_Id={0}", id);
-
+                    cmd.CommandText = string.Format("select Users.Id, Workers.Name,Users.Email from Workers join Users on Workers.Worker_Id=Users.Id where Workers.Worker_Id='{0}'", id);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
