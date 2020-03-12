@@ -110,6 +110,14 @@ li{
   padding-top: 0.8vw;
   font-size: 2.2vh;
 }
+
+.fakeDetailsTableColMan{
+  float: left;
+  display: table-column;
+  width: 23%;
+  padding-top: 0.8vw;
+  font-size: 2.2vh;
+}
 .fakeDetailsTableCol{
   float: left;
   display: table-column;

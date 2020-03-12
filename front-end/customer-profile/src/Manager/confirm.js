@@ -50,27 +50,8 @@ class OrdersList extends React.Component{
 
   }
 
-  handleConfirm=(id,stat)=>{
-    const someData = {
-      orderid:id,
-      status:stat
-     }
-
-    const putMethod = {
-      method: 'PUT',
-      headers: {
-       'Content-type': 'application/json' 
-      },
-      body: JSON.stringify(someData)
-     }
-     
-     fetch("https://localhost:5001/manager/order/update", putMethod)
-     .then(response => response.json())
-  }
-
   componentDidMount()
   {
-    
     const that = this;
     var showdetails=[];
     fetch("https://localhost:5001/manager/orders/" + this.state.status)
@@ -92,7 +73,6 @@ class OrdersList extends React.Component{
   }
 
   render() {
-    //const  that=this;
     return(
        
         <div className="tableWrapper">
@@ -125,23 +105,25 @@ class OrdersList extends React.Component{
                                                         <div className="fakeTableColMan">Price</div>
                                                     </div> : ' '}
                         {this.state.showDetails[i-1]?this.state.details.map(it =>{return (<div className="fakeDetailsTableRow" key={it.barcode}>
-                                                                                                <div className="fakeDetailsTableCol"></div>
-                                                                                                <div className="fakeDetailsTableCol">{it.product}</div>
-                                                                                                <div className="fakeDetailsTableCol">{it.quantity}</div> 
-                                                                                                <div className="fakeDetailsTableCol">{it.price * it.quantity}</div>                                                                                              
-                                                                                            </div>)}) : ''}
+                                                                                                <div className="fakeDetailsTableColMan"></div>
+                                                                                                <div className="fakeDetailsTableColMan">{it.product}</div>
+                                                                                                <div className="fakeDetailsTableColMan">{it.quantity}</div> 
+                                                                                                <div className="fakeDetailsTableColMan">{it.price * it.quantity}</div>                                                                                              
+                                                                                            </div>)})
+                                                                                             : ''}
 
                        {this.state.showDetails[i-1] ? <div className="fakeDetailsTableRow">
-                                                        <div className="fakeDetailsTableCol">Customer</div>
-                                                        <div className="fakeDetailsTableCol"></div>
-                                                        <div className="fakeDetailsTableCol">Delvery date</div>
-                                                        <div className="fakeDetailsTableCol"></div>  
+                                                        <br/> 
+                                                        <div className="fakeDetailsTableColMan"></div>
+                                                        <div className="fakeDetailsTableColMan">Customer</div>
+                                                        <div className="fakeDetailsTableColMan">Delvery date</div>
+                                                        <div className="fakeDetailsTableColMan"></div>  
                                                         </div> : ''}
                     {this.state.showDetails[i-1] ? <div className="fakeDetailsTableRow">
-                                                        <div className="fakeDetailsTableCol">{this.state.details[0].customer + this.state.details[0].phonenumber}</div>
-                                                        <div className="fakeDetailsTableCol"></div>
-                                                        <div className="fakeDetailsTableCol">{this.state.details[0].deliverydate}</div>
-                                                        <div className="fakeDetailsTableCol"></div>
+                                                        <div className="fakeDetailsTableColMan"></div>
+                                                        <div className="fakeDetailsTableColMan">{this.state.details[0].customer + this.state.details[0].phonenumber}</div>
+                                                        <div className="fakeDetailsTableColMan">{this.state.details[0].deliverydate}</div>
+                                                        <div className="fakeDetailsTableColMan"></div>
                                                         
                                                         <br/><br/><br/><br/><br/>
                                                     </div> : ''}

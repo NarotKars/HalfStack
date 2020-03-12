@@ -51,6 +51,7 @@ class OrdersList extends React.Component{
   }
 
   handleConfirm=(id,stat)=>{
+  
     const someData = {
       orderid:id,
       status:stat
@@ -65,9 +66,14 @@ class OrdersList extends React.Component{
       body: JSON.stringify(someData)
      }
      
-     fetch("https://localhost:5001/api/update", putMethod)
+     fetch("https://localhost:5001/api/orderstatus/update", putMethod)
      .then(response => response.json())
-     console.log(Response.json());
+
+     var order=[...this.state.orders];
+     const index=this.state.orders.map(item => item.orderId).indexOf(id);
+        order.splice(index,1);
+        this.setState({
+            orders:[...order],})
   }
 
   componentDidMount()
@@ -94,7 +100,6 @@ class OrdersList extends React.Component{
   }
 
   render() {
-    //const  that=this;
     return(
        
         <div className="tableWrapper">
@@ -127,31 +132,31 @@ class OrdersList extends React.Component{
                                                         <div className="fakeTableColMan">Price</div>
                                                     </div> : ' '}
                         {this.state.showDetails[i-1]?this.state.details.map(it =>{return (<div className="fakeDetailsTableRow" key={it.barcode}>
-                                                                                                <div className="fakeDetailsTableCol"></div>
-                                                                                                <div className="fakeDetailsTableCol">{it.product}</div>
-                                                                                                <div className="fakeDetailsTableCol">{it.quantity}</div> 
-                                                                                                <div className="fakeDetailsTableCol">{it.price * it.quantity}</div>                                                                                              
+                                                                                                <div className="fakeDetailsTableColMan"></div>
+                                                                                                <div className="fakeDetailsTableColMan">{it.product}</div>
+                                                                                                <div className="fakeDetailsTableColMan">{it.quantity}</div> 
+                                                                                                <div className="fakeDetailsTableColMan">{it.price * it.quantity}</div>                                                                                              
                                                                                             </div>)}) : ''}
 
                        {this.state.showDetails[i-1] ? <div className="fakeDetailsTableRow">
-                                                        <div className="fakeDetailsTableCol">Customer</div>
-                                                        <div className="fakeDetailsTableCol"></div>
-                                                        <div className="fakeDetailsTableCol">Delivery date</div>
-                                                        <div className="fakeDetailsTableCol"></div>
-                                                       
+                                                        <br/>
+                                                        <div className="fakeDetailsTableColMan"></div>                                   
+                                                        <div className="fakeDetailsTableColMan">Customer</div>
+                                                        <div className="fakeDetailsTableColMan">Delivery date</div>
+                                                        <div className="fakeDetailsTableColMan">Delivery time</div>
                                                         </div> : ''}
                     {this.state.showDetails[i-1] ? <div className="fakeDetailsTableRow">
-                                                        <div className="fakeDetailsTableCol">{this.state.details[0].customer + this.state.details[0].phonenumber}</div>
-                                                        <div className="fakeDetailsTableCol"></div>
-                                                        <div className="fakeDetailsTableCol">{this.state.details[0].deliverydate}</div>
-                                                        <div className="fakeDetailsTableCol"></div>            
+                                                        <div className="fakeDetailsTableColMan"></div>
+                                                        <div className="fakeDetailsTableColMan">{this.state.details[0].customer + this.state.details[0].phonenumber}</div>
+                                                        <div className="fakeDetailsTableColMan">{this.state.details[0].deliverydate}</div>
+                                                        <div className="fakeDetailsTableColMan">{this.state.details[0].time}</div>            
                                                         <br/><br/><br/><br/><br/>
                                                     </div> : ''}
                     {this.state.showDetails[i-1] ?<div className="fakeDetailsTableRow">
                                                        <div className="fakeDetailsTableCol"></div>
                                                        <div className="fakeDetailsTableCol"></div>
                                                        <div className="fakeDetailsTableCol">
-                                                            <button onClick={() => this.handleConfirm(item.orderId,"confirm")} className="seeDetailsBtn">Confirm</button>
+                                                            <button onClick={() => this.handleConfirm(item.orderId,"confirmed")} className="seeDetailsBtn">Confirm</button>
                                                       </div>
                                                       <div className="fakeDetailsTableCol">
                                                             <button onClick={() => this.handleConfirm(item.orderId,"later")} className="seeDetailsBtn">Later</button>
